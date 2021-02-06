@@ -1,0 +1,35 @@
+/* Uriversal tags */
+html {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+}
+body {
+  overflow-x: hidden;
+  color: rgb(29, 29, 31);
+  letter-spacing: -0.05em;
+  background-color: white;
+}
+ul {
+  list-style: none;
+}
+a {
+  display: block;
+  text-decoration: none;
+}
+p {
+  line-height: 1.6;
+}
+
+/* Nav */
+nav:first-child {
+  line-height: 44px;
+}
+nav:first-child ul {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: red;
+}
