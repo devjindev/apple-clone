@@ -72,6 +72,9 @@ nav:last-of-type > ul {
 nav:last-of-type > h1 {
   margin: 0 auto 0 0;
 }
+nav:last-of-type > h1 a img {
+  width: 34px;
+}
 nav:last-of-type > ul li:not(:first-of-type) {
   margin-left: 2em;
 }
@@ -174,8 +177,8 @@ footer {
   }
 
   /* Nav */
-  nav:last-of-type > h1 a i {
-    font-size: 24px;
+  nav:last-of-type > h1 a img {
+    width: 27px;
   }
 
   /* 3rd Section */
