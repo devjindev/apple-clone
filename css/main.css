@@ -42,15 +42,19 @@ a {
 }
 
 /* Typotgraphy */
-nav,
+nav > div,
 section {
   max-width: 1000px;
   margin: 0 auto;
   padding: 0 3%;
 }
+section {
+  border: 2px solid hotpink;
+  padding-top: 50vh;
+}
 .sticky-elem {
   position: fixed;
-  top: 0;
+  /* top: 0; */
   left: 0;
   width: 100%;
   display: none;
@@ -60,9 +64,6 @@ section {
 #show-scene-2 #scroll-section-2 .sticky-elem,
 #show-scene-3 #scroll-section-3 .sticky-elem {
   display: block;
-}
-section {
-  border: 2px solid hotpink;
 }
 
 /* Navbar */
@@ -80,40 +81,37 @@ nav:last-of-type {
   line-height: 52px;
   border-bottom: 1px solid #ddd;
 }
-nav:first-of-type > ul,
-nav:last-of-type > ul {
+nav:first-of-type > div > ul,
+nav:last-of-type > div > ul {
   margin: 0;
   padding: 0;
 }
-nav:first-of-type > ul,
-nav:last-of-type,
-nav:last-of-type > ul {
+nav:first-of-type > div > ul,
+nav:last-of-type > div,
+nav:last-of-type > div > ul {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-nav:last-of-type > h1 {
+nav:last-of-type > div > h1 {
   margin: 0 auto 0 0;
 }
-nav:last-of-type > h1 a img {
+nav:last-of-type > div > h1 a img {
   width: 34px;
 }
-nav:last-of-type > ul li:not(:first-of-type) {
+nav:last-of-type > div > ul li:not(:first-of-type) {
   margin-left: 2em;
 }
 /* a */
-nav:last-of-type > h1 a i {
+nav:last-of-type > div > h1 a i {
   font-size: 32px;
   color: #eb4034;
 }
-nav:last-of-type > ul li a {
+nav:last-of-type > div > ul li a {
   font-size: var(--font-micro);
 }
 
 /* 1st Section */
-#scroll-section-0 {
-  padding-top: 50vh;
-}
 #scroll-section-0 > h2 {
   font-size: var(--font-large);
   font-weight: var(--weight-extra-bold);
@@ -128,6 +126,8 @@ nav:last-of-type > ul li a {
   font-weight: var(--weight-bold);
   text-align: center;
   opacity: 0;
+  top: 35vh;
+}
 
 /* 2nd Section */
 #scroll-section-1 > p strong {
@@ -160,6 +160,14 @@ nav:last-of-type > ul li a {
   width: 1px;
   height: 100px;
   background-color: var(--color-black);
+}
+#scroll-section-2 > p:nth-of-type(2) {
+  top: 20%;
+  left: 53%;
+}
+#scroll-section-2 > p:nth-of-type(3) {
+  top: 15%;
+  left: 55%;
 }
 
 /* 4th Section */
@@ -202,6 +210,15 @@ footer {
   /* Nav */
   nav:last-of-type > h1 a img {
     width: 27px;
+  }
+
+  /* 2nd Section */
+  #scroll-section-2 > p:nth-of-type(2) {
+    top: 10%;
+    left: 40%;
+  }
+  #scroll-section-2 > p:nth-of-type(3) {
+    left: 45%;
   }
 
   /* 3rd Section */

@@ -23,35 +23,94 @@
                 messageD: document.querySelector('#scroll-section-0 > p:nth-of-type(4)')
             },
             values:{ // 섹션 안 컨텐츠 값 객체 // 각 섹션 안 컨텐츠 값 설정
-                messageA_opacity: [0, 1, {start:0.1, end:0.2}], // 첫 번째 컨텐츠 투명도 // 구간 0.1~0.2, 길이 10%
-                messageB_opacity: [0, 1, {start:0.3, end:0.4}] // 두 번째 컨텐츠 투명도 // 구간 0.3~0.4, 길이 10%
+                // 컨텐츠 들어올 때 (나타날 때)
+                // 투명도
+                messageA_opacity_in: [0, 1, { start: 0.1, end: 0.2 }], // 구간 10~20%
+                messageB_opacity_in: [0, 1, { start: 0.3, end: 0.4 }],
+                messageC_opacity_in: [0, 1, { start: 0.5, end: 0.6 }],
+                messageD_opacity_in: [0, 1, { start: 0.7, end: 0.8 }],
+                // y값
+                messageA_translateY_in: [20, 0, { start: 0.1, end: 0.2 }], // 구간 10~20%
+                messageB_translateY_in: [20, 0, { start: 0.3, end: 0.4 }],
+                messageC_translateY_in: [20, 0, { start: 0.5, end: 0.6 }],
+                messageD_translateY_in: [20, 0, { start: 0.7, end: 0.8 }],
+                
+                // 컨텐츠 나갈 때 (사라질 때)
+                // 투명도
+                messageA_opacity_out: [1, 0, { start: 0.25, end: 0.3 }], // 구간 25~30%
+                messageB_opacity_out: [1, 0, { start: 0.45, end: 0.5 }],
+                messageC_opacity_out: [1, 0, { start: 0.65, end: 0.7 }],
+                messageD_opacity_out: [1, 0, { start: 0.85, end: 0.9 }],
+                // y값
+                messageA_translateY_out: [0, -20, { start: 0.25, end: 0.3 }], // 구간 25~30%
+                messageB_translateY_out: [0, -20, { start: 0.45, end: 0.5 }],
+                messageC_translateY_out: [0, -20, { start: 0.65, end: 0.7 }],
+                messageD_translateY_out: [0, -20, { start: 0.85, end: 0.9 }]
             }
         },
+
         // #scroll-section-1
         {
             type: 'normal',
-            heigthNum: 5,
+            //heigthNum: 5, // normal에서는 필요 X
             scrollHeight: 0,
-            objs:{
+            objs: { // 섹션, 섹션 안 컨텐츠 객체 // 각 섹션 + 각 섹션 안 컨텐츠 가져오기
                 container: document.querySelector('#scroll-section-1'),
+                content: document.querySelector('#scroll-section-1 > p')
             }
         },
+
         // #scroll-section-2
         {
             type: 'sticky',
             heigthNum: 5,
             scrollHeight: 0,
-            objs:{
+            objs: { // 섹션, 섹션 안 컨텐츠 객체 // 각 섹션 + 각 섹션 안 컨텐츠 가져오기
                 container: document.querySelector('#scroll-section-2'),
+                messageA: document.querySelector('#scroll-section-2 > p:nth-of-type(1)'),
+                messageB: document.querySelector('#scroll-section-2 > p:nth-of-type(2)'),
+                messageC: document.querySelector('#scroll-section-2 > p:nth-of-type(3)'),
+                pinB: document.querySelector('#scroll-section-2 > p:nth-of-type(2) span'),
+                pinC: document.querySelector('#scroll-section-2 > > p:nth-of-type(3) span')
+            },
+            values: { // 섹션 안 컨텐츠 값 객체 // 각 섹션 안 컨텐츠 값 설정
+                // 컨텐츠 들어올 때 (나타날 때)
+                // 투명도
+                messageA_opacity_in: [0, 1, { start: 0.25, end: 0.3 }],
+                messageB_opacity_in: [0, 1, { start: 0.6, end: 0.65 }],
+                messageC_opacity_in: [0, 1, { start: 0.87, end: 0.92 }],
+                // y값
+                messageA_translateY_in: [20, 0, { start: 0.15, end: 0.2 }],
+                messageB_translateY_in: [30, 0, { start: 0.6, end: 0.65 }],
+                messageC_translateY_in: [30, 0, { start: 0.87, end: 0.92 }],
+
+                // 컨텐츠 나갈 때 (사라질 때)
+                // 투명도
+                messageA_opacity_out: [1, 0, { start: 0.4, end: 0.45 }],
+                messageB_opacity_out: [1, 0, { start: 0.68, end: 0.73 }],
+                messageC_opacity_out: [1, 0, { start: 0.95, end: 1 }],
+                // y값
+                messageA_translateY_out: [0, -20, { start: 0.4, end: 0.45 }],
+                messageB_translateY_out: [0, -20, { start: 0.68, end: 0.73 }],
+                messageC_translateY_out: [0, -20, { start: 0.95, end: 1 }],
+
+                // span
+                pinB_scaleY: [0.5, 1, { start: 0.6, end: 0.65 }],
+                pinC_scaleY: [0.5, 1, { start: 0.87, end: 0.92 }]
             }
         },
+
         // #scroll-section-3
         {
             type: 'sticky',
             heigthNum: 5,
             scrollHeight: 0,
-            objs:{
+            objs: { // 섹션, 섹션 안 컨텐츠 객체 // 각 섹션 + 각 섹션 안 컨텐츠 가져오기
                 container: document.querySelector('#scroll-section-3'),
+                canvasCaption: document.querySelector('#scroll-section-3 > p:nth-of-type(2)')
+            },
+            values: { // 섹션 안 컨텐츠 값 객체 // 각 섹션 안 컨텐츠 값 설정
+    
             }
         }
     ];
@@ -59,8 +118,13 @@
     // 함수 선언🟩 각 섹션 스크롤 높이 세팅
     function setLayout(){
         for(let i = 0; i < sceneInfo.length; i++){
-            // 각 섹션 스크롤 높이 = heightNum * 윈도우 창 높이
-            sceneInfo[i].scrollHeight = sceneInfo[i].heigthNum * window.innerHeight;
+            if(sceneInfo[i].type === 'sticky'){
+                // 각 섹션 스크롤 높이 = heightNum * 윈도우 창 높이
+                sceneInfo[i].scrollHeight = sceneInfo[i].heigthNum * window.innerHeight;
+            }else if(sceneInfo[i].type === 'normal'){
+                // 각 섹션 스크롤 높이 = 섹션 본래 높이
+                sceneInfo[i].scrollHeight = sceneInfo[i].objs.container.offsetHeigth;
+            }
             // 각 섹션에 스크롤 높이 세팅
             sceneInfo[i].objs.container.style.height = `${sceneInfo[i].scrollHeight}px`;
         }
@@ -107,7 +171,7 @@
         function calcValues(values, currentYOffset){
             let rv; // return value
             const scrollHeight = sceneInfo[currentScene].scrollHeight; // 현재 색션 스크롤 높이
-            const scrollRatio = currentYOffset / sceneInfo[currentScene].scrollHeight; // 현재 섹션에서 스크롤된 범위의 비율 = 현재 섹션의 처음에서 얼만큼 스크롤 됐냐 / 현재 섹션 스크롤 높이
+            const scrollRatio = currentYOffset / scrollHeight; // 현재 섹션에서 스크롤된 범위의 비율 = 현재 섹션의 처음에서 얼만큼 스크롤 됐냐 / 현재 섹션 스크롤 높이
             
             if(values.length===3){ // start, end 값이 있는 경우 => 컨텐츠
                 const partScrollStart = values[2].start * scrollHeight; // 각 컨텐츠 실제 시작점 = 가상 시작점 * 현재 섹션 스크롤 높이 
@@ -134,19 +198,90 @@
             const objs = sceneInfo[currentScene].objs; // 각 섹션 + 각 섹션 안 컨텐츠 가져오기
             const values = sceneInfo[currentScene].values; // 각 섹션 안 컨텐츠 값 설정
             const currentYOffset = yOffset - prevScrollHeight; // 현재 섹션의 처음에서 얼만큼 스크롤 됐냐 = 현재 스크롤 위치 - 이전 섹션들 스크롤 높이의 합
-            console.log(currentScene);
+            const scrollHeight = sceneInfo[currentScene].scrollHeight; // 현재 색션 스크롤 높이
+            const scrollRatio = currentYOffset / scrollHeight; // 현재 섹션에서 스크롤된 범위의 비율 = 현재 섹션의 처음에서 얼만큼 스크롤 됐냐 / 현재 섹션 스크롤 높이
+            
             switch(currentScene){ // 현재 활성화 섹션이
                 case 0: // #scroll-section-0
-                    let messageA_opacity_in = calcValues(values.messageA_opacity, currentYOffset); // values.messageA_opacity 계산
-                    objs.messageA.style.opacity = messageA_opacity_in;
-                    console.log(messageA_opacity_in);
+                    if(scrollRatio <= 0.22){ // 현재 섹션 내 스크롤 범위 비율이 컨텐츠 시작점 사이면
+                        objs.messageA.style.opacity = calcValues(values.messageA_opacity_in, currentYOffset); // A 컨텐츠에 opacity in css 적용
+                        objs.messageA.style.transform = `translate3d(0, ${calcValues(values.messageA_translateY_in, currentYOffset)}%, 0)`; // A 컨텐츠에 translateY in css 적용
+                    }else{ // 현재 섹션 내 스크롤 범위 비율이 컨텐츠 끝점 사이면
+                        objs.messageA.style.opacity = calcValues(values.messageA_opacity_out, currentYOffset); // A 컨텐츠에 opacity out css 적용
+                        objs.messageA.style.transform = `translate3d(0, ${calcValues(values.messageA_translateY_out, currentYOffset)}%, 0)`; // A 컨텐츠에 translateY out css 적용
+                    }
+
+                    if (scrollRatio <= 0.42) {
+                        // in
+                        objs.messageB.style.opacity = calcValues(values.messageB_opacity_in, currentYOffset);
+                        objs.messageB.style.transform = `translate3d(0, ${calcValues(values.messageB_translateY_in, currentYOffset)}%, 0)`;
+                    } else {
+                        // out
+                        objs.messageB.style.opacity = calcValues(values.messageB_opacity_out, currentYOffset);
+                        objs.messageB.style.transform = `translate3d(0, ${calcValues(values.messageB_translateY_out, currentYOffset)}%, 0)`;
+                    }
+        
+                    if (scrollRatio <= 0.62) {
+                        // in
+                        objs.messageC.style.opacity = calcValues(values.messageC_opacity_in, currentYOffset);
+                        objs.messageC.style.transform = `translate3d(0, ${calcValues(values.messageC_translateY_in, currentYOffset)}%, 0)`;
+                    } else {
+                        // out
+                        objs.messageC.style.opacity = calcValues(values.messageC_opacity_out, currentYOffset);
+                        objs.messageC.style.transform = `translate3d(0, ${calcValues(values.messageC_translateY_out, currentYOffset)}%, 0)`;
+                    }
+        
+                    if (scrollRatio <= 0.82) {
+                        // in
+                        objs.messageD.style.opacity = calcValues(values.messageD_opacity_in, currentYOffset);
+                        objs.messageD.style.transform = `translate3d(0, ${calcValues(values.messageD_translateY_in, currentYOffset)}%, 0)`;
+                    } else {
+                        // out
+                        objs.messageD.style.opacity = calcValues(values.messageD_opacity_out, currentYOffset);
+                        objs.messageD.style.transform = `translate3d(0, ${calcValues(values.messageD_translateY_out, currentYOffset)}%, 0)`;
+                    }
+
                     break;
-                case 1: // #scroll-section-1
-                        
-                    break;
+                
+                //case 1: // #scroll-section-1 // normal에서는 필요 X
+                
                 case 2: // #scroll-section-2
-                        
+                    if (scrollRatio <= 0.32) {
+                        // in
+                        objs.messageA.style.opacity = calcValues(values.messageA_opacity_in, currentYOffset);
+                        objs.messageA.style.transform = `translate3d(0, ${calcValues(values.messageA_translateY_in, currentYOffset)}%, 0)`;
+                    } else {
+                        // out
+                        objs.messageA.style.opacity = calcValues(values.messageA_opacity_out, currentYOffset);
+                        objs.messageA.style.transform = `translate3d(0, ${calcValues(values.messageA_translateY_out, currentYOffset)}%, 0)`;
+                    }
+        
+                    if (scrollRatio <= 0.67) {
+                        // in
+                        objs.messageB.style.transform = `translate3d(0, ${calcValues(values.messageB_translateY_in, currentYOffset)}%, 0)`;
+                        objs.messageB.style.opacity = calcValues(values.messageB_opacity_in, currentYOffset);
+                        objs.pinB.style.transform = `scaleY(${calcValues(values.pinB_scaleY, currentYOffset)})`;
+                    } else {
+                        // out
+                        objs.messageB.style.transform = `translate3d(0, ${calcValues(values.messageB_translateY_out, currentYOffset)}%, 0)`;
+                        objs.messageB.style.opacity = calcValues(values.messageB_opacity_out, currentYOffset);
+                        objs.pinB.style.transform = `scaleY(${calcValues(values.pinB_scaleY, currentYOffset)})`;
+                    }
+        
+                    if (scrollRatio <= 0.93) {
+                        // in
+                        objs.messageC.style.transform = `translate3d(0, ${calcValues(values.messageC_translateY_in, currentYOffset)}%, 0)`;
+                        objs.messageC.style.opacity = calcValues(values.messageC_opacity_in, currentYOffset);
+                        objs.pinC.style.transform = `scaleY(${calcValues(values.pinC_scaleY, currentYOffset)})`;
+                    } else {
+                        // out
+                        objs.messageC.style.transform = `translate3d(0, ${calcValues(values.messageC_translateY_out, currentYOffset)}%, 0)`;
+                        objs.messageC.style.opacity = calcValues(values.messageC_opacity_out, currentYOffset);
+                        objs.pinC.style.transform = `scaleY(${calcValues(values.pinC_scaleY, currentYOffset)})`;
+                    }
+
                     break;
+                
                 case 3: // #scroll-section-3
                         
                     break;
@@ -154,21 +289,7 @@
         }
         playAnimation();
     }
-    // {
-    //     type: 'sticky',
-    //     heigthNum: 5, // 브라우저 높이의 5배로 scrollHeight 세팅
-    //     scrollHeight: 0, // 각 섹션 스크롤 높이 // 기기마다 유동적
-    //     objs:{ // 섹션, 섹션 안 컨텐츠 객체 // 각 섹션 + 각 섹션 안 컨텐츠 가져오기
-    //         container: document.querySelector('#scroll-section-0'),
-    //         messageA: document.querySelector('#scroll-section-0 > p:nth-of-type(1)'),
-    //         messageB: document.querySelector('#scroll-section-0 > p:nth-of-type(2)'),
-    //         messageC: document.querySelector('#scroll-section-0 > p:nth-of-type(3)'),
-    //         messageD: document.querySelector('#scroll-section-0 > p:nth-of-type(4)')
-    //     },
-    //     values:{ // 섹션 안 컨텐츠 값 객체 // 각 섹션 안 컨텐츠 값 설정
-    //         messageA_opacity: [0, 1] // 첫번째 컨텐츠 투명도
-    //     }
-    // },
+
     window.addEventListener('scroll',function(){ // 윈도우 창 스크롤하면,
         yOffset = window.pageYOffset; // 현재 스크롤 위치
         scrollLoop(); // 실행
