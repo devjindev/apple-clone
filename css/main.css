@@ -127,7 +127,7 @@ nav:last-of-type > ul li a {
   font-size: var(--font-regular);
   font-weight: var(--weight-bold);
   text-align: center;
-}
+  opacity: 0;
 
 /* 2nd Section */
 #scroll-section-1 > p strong {
