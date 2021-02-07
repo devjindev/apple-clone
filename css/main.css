@@ -48,6 +48,19 @@ section {
   margin: 0 auto;
   padding: 0 3%;
 }
+.sticky-elem {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: none;
+}
+#show-scene-0 #scroll-section-0 > .sticky-elem,
+#show-scene-1 #scroll-section-1 .sticky-elem,
+#show-scene-2 #scroll-section-2 .sticky-elem,
+#show-scene-3 #scroll-section-3 .sticky-elem {
+  display: block;
+}
 
 /* Navbar */
 nav:first-of-type {
@@ -96,8 +109,8 @@ section:nth-of-type(1) > h2 {
   font-weight: var(--weight-extra-bold);
   text-align: center;
 }
-section:nth-of-type(1) > div p {
-  display: flex;
+section:nth-of-type(1) > p {
+  /* display: flex; */
   justify-content: center;
   align-items: center;
   height: 3em;
@@ -112,7 +125,7 @@ section:nth-of-type(2) > p strong {
   margin-right: 0.2em;
   color: var(--color-black);
   font-size: var(--font-medium);
-  font-weight: var(--weight-bold);
+  font-weight: var(--weight-extra-bold);
 }
 section:nth-of-type(2) > p {
   color: var(--color-gray);
@@ -127,7 +140,7 @@ section:nth-of-type(3) > p:nth-of-type(1) small {
 }
 section:nth-of-type(3) > p:nth-of-type(1) {
   font-size: var(--font-medium);
-  font-weight: var(--weight-bold);
+  font-weight: var(--weight-extra-bold);
 }
 section:nth-of-type(3) > p:not(:nth-of-type(1)) {
   width: 20%;
@@ -143,7 +156,7 @@ section:nth-of-type(3) > p:not(:nth-of-type(1)) span {
 section:nth-of-type(4) > p:nth-of-type(1) strong {
   color: var(--color-black);
   font-size: var(--font-medium);
-  font-weight: var(--weight-bold);
+  font-weight: var(--weight-extra-bold);
 }
 section:nth-of-type(4) > p:nth-of-type(1) {
   color: var(--color-gray);
