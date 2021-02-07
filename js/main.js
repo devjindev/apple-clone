@@ -70,8 +70,8 @@
                 messageA: document.querySelector('#scroll-section-2 > p:nth-of-type(1)'),
                 messageB: document.querySelector('#scroll-section-2 > p:nth-of-type(2)'),
                 messageC: document.querySelector('#scroll-section-2 > p:nth-of-type(3)'),
-                pinB: document.querySelector('#scroll-section-2 .b .pin'),
-                pinC: document.querySelector('#scroll-section-2 .c .pin')
+                pinB: document.querySelector('#scroll-section-2 > p:nth-of-type(2) span'),
+                pinC: document.querySelector('#scroll-section-2 > p:nth-of-type(3) span')
             },
             values: { // 섹션 안 컨텐츠 값 객체 // 각 섹션 안 컨텐츠 값 설정
                 // 컨텐츠 들어올 때 (나타날 때)
