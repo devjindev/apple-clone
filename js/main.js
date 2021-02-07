@@ -70,8 +70,8 @@
                 messageA: document.querySelector('#scroll-section-2 > p:nth-of-type(1)'),
                 messageB: document.querySelector('#scroll-section-2 > p:nth-of-type(2)'),
                 messageC: document.querySelector('#scroll-section-2 > p:nth-of-type(3)'),
-                pinB: document.querySelector('#scroll-section-2 > p:nth-of-type(2) span'),
-                pinC: document.querySelector('#scroll-section-2 > > p:nth-of-type(3) span')
+                pinB: document.querySelector('#scroll-section-2 .b .pin'),
+                pinC: document.querySelector('#scroll-section-2 .c .pin')
             },
             values: { // 섹션 안 컨텐츠 값 객체 // 각 섹션 안 컨텐츠 값 설정
                 // 컨텐츠 들어올 때 (나타날 때)
@@ -107,7 +107,7 @@
             scrollHeight: 0,
             objs: { // 섹션, 섹션 안 컨텐츠 객체 // 각 섹션 + 각 섹션 안 컨텐츠 가져오기
                 container: document.querySelector('#scroll-section-3'),
-                canvasCaption: document.querySelector('#scroll-section-3 > p:nth-of-type(2)')
+                canvasCaption: document.querySelector('.canvas-caption')
             },
             values: { // 섹션 안 컨텐츠 값 객체 // 각 섹션 안 컨텐츠 값 설정
     
