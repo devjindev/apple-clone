@@ -15,15 +15,16 @@
             type: 'sticky',
             heigthNum: 5, // 브라우저 높이의 5배로 scrollHeight 세팅
             scrollHeight: 0, // 각 섹션 스크롤 높이 // 기기마다 유동적
-            objs:{ // 섹션, 섹션 안 콘텐츠 객체 // 각 섹션 + 각 섹션 안 콘텐츠 가져오기
+            objs:{ // 섹션, 섹션 안 컨텐츠 객체 // 각 섹션 + 각 섹션 안 컨텐츠 가져오기
                 container: document.querySelector('#scroll-section-0'),
                 messageA: document.querySelector('#scroll-section-0 > p:nth-of-type(1)'),
                 messageB: document.querySelector('#scroll-section-0 > p:nth-of-type(2)'),
                 messageC: document.querySelector('#scroll-section-0 > p:nth-of-type(3)'),
                 messageD: document.querySelector('#scroll-section-0 > p:nth-of-type(4)')
             },
-            values:{ // 섹션 안 콘텐츠 값 객체 // 각 섹션 안 콘텐츠 값 설정
-                messageA_opacity: [0, 1] // 첫번째 콘텐츠 투명도
+            values:{ // 섹션 안 컨텐츠 값 객체 // 각 섹션 안 컨텐츠 값 설정
+                messageA_opacity: [0, 1, {start:0.1, end:0.2}], // 첫 번째 컨텐츠 투명도 // 구간 0.1~0.2, 길이 10%
+                messageB_opacity: [0, 1, {start:0.3, end:0.4}] // 두 번째 컨텐츠 투명도 // 구간 0.3~0.4, 길이 10%
             }
         },
         // #scroll-section-1
@@ -102,12 +103,27 @@
         }
 
 
-        // 함수 선언🟩 스크롤 시 애니메이션(각 섹션 안 콘텐츠 값) 계산
+        // 함수 선언🟩 스크롤 시 애니메이션(각 섹션 안 컨텐츠 값) 계산
         function calcValues(values, currentYOffset){
             let rv; // return value
-            let scrollRatio = currentYOffset / sceneInfo[currentScene].scrollHeight; // 현재 섹션에서 스크롤된 범위의 비율 = 현재 섹션의 처음에서 얼만큼 스크롤 됐냐 / 현재 섹션 스크롤 높이
+            const scrollHeight = sceneInfo[currentScene].scrollHeight; // 현재 색션 스크롤 높이
+            const scrollRatio = currentYOffset / sceneInfo[currentScene].scrollHeight; // 현재 섹션에서 스크롤된 범위의 비율 = 현재 섹션의 처음에서 얼만큼 스크롤 됐냐 / 현재 섹션 스크롤 높이
             
-            rv = (scrollRatio * (values[1]-values[0]) + values[0]); // return 값 = 비율 * (values 처음 값 - values 끝 값) + values 처음 값
+            if(values.length===3){ // start, end 값이 있는 경우 => 컨텐츠
+                const partScrollStart = values[2].start * scrollHeight; // 각 컨텐츠 실제 시작점 = 가상 시작점 * 현재 섹션 스크롤 높이 
+                const partScrollEnd = values[2].end * scrollHeight; // 각 컨텐츠 실제 끝점 = 가상 끝점 * 현재 섹션 스크롤 높이 
+                const partScrollHeight = partScrollEnd - partScrollStart; // 각 컨텐츠 시작~끝 높이
+                
+                if((currentYOffset >= partScrollStart) && (currentYOffset <=partScrollEnd)){ // 현재 섹션 내 스크롤 위치가 컨텐츠 시작점과 종료점 사이면
+                    rv = (currentYOffset - partScrollStart) / partScrollHeight * (values[1]-values[0]) + values[0]; // return 값 =
+                }else if(currentYOffset < partScrollStart){ // 컨텐츠 시작점 전이면
+                    rv = values[0]; // return 값 = 시작점으로 맞춰줌
+                }else if(currentYOffset > partScrollEnd){ // 컨텐츠 끝점 후면
+                    rv= values[1]; // return 값 = 끝점으로 맞춰줌
+                }
+            }else{ // start, end 값이 없는 경우 => 섹션
+                rv = (scrollRatio * (values[1]-values[0]) + values[0]); // return 값 = 비율 * (values 처음 값 - values 끝 값) + values 처음 값
+            }
 
             return rv;
         }
@@ -115,8 +131,8 @@
         // 함수 선언🟩 스크롤 시 애니메이션 설정
         function playAnimation(){
             // currentYOffset에 따라 values 달라짐
-            const objs = sceneInfo[currentScene].objs; // 각 섹션 + 각 섹션 안 콘텐츠 가져오기
-            const values = sceneInfo[currentScene].values; // 각 섹션 안 콘텐츠 값 설정
+            const objs = sceneInfo[currentScene].objs; // 각 섹션 + 각 섹션 안 컨텐츠 가져오기
+            const values = sceneInfo[currentScene].values; // 각 섹션 안 컨텐츠 값 설정
             const currentYOffset = yOffset - prevScrollHeight; // 현재 섹션의 처음에서 얼만큼 스크롤 됐냐 = 현재 스크롤 위치 - 이전 섹션들 스크롤 높이의 합
             console.log(currentScene);
             switch(currentScene){ // 현재 활성화 섹션이
@@ -142,15 +158,15 @@
     //     type: 'sticky',
     //     heigthNum: 5, // 브라우저 높이의 5배로 scrollHeight 세팅
     //     scrollHeight: 0, // 각 섹션 스크롤 높이 // 기기마다 유동적
-    //     objs:{ // 섹션, 섹션 안 콘텐츠 객체 // 각 섹션 + 각 섹션 안 콘텐츠 가져오기
+    //     objs:{ // 섹션, 섹션 안 컨텐츠 객체 // 각 섹션 + 각 섹션 안 컨텐츠 가져오기
     //         container: document.querySelector('#scroll-section-0'),
     //         messageA: document.querySelector('#scroll-section-0 > p:nth-of-type(1)'),
     //         messageB: document.querySelector('#scroll-section-0 > p:nth-of-type(2)'),
     //         messageC: document.querySelector('#scroll-section-0 > p:nth-of-type(3)'),
     //         messageD: document.querySelector('#scroll-section-0 > p:nth-of-type(4)')
     //     },
-    //     values:{ // 섹션 안 콘텐츠 값 객체 // 각 섹션 안 콘텐츠 값 설정
-    //         messageA_opacity: [0, 1] // 첫번째 콘텐츠 투명도
+    //     values:{ // 섹션 안 컨텐츠 값 객체 // 각 섹션 안 컨텐츠 값 설정
+    //         messageA_opacity: [0, 1] // 첫번째 컨텐츠 투명도
     //     }
     // },
     window.addEventListener('scroll',function(){ // 윈도우 창 스크롤하면,
