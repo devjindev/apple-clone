@@ -61,12 +61,22 @@ section {
 #show-scene-3 #scroll-section-3 .sticky-elem {
   display: block;
 }
+section {
+  border: 2px solid hotpink;
+}
 
 /* Navbar */
+nav {
+  position: absolute;
+  left: 0;
+  width: 100%;
+}
 nav:first-of-type {
+  top: 0;
   line-height: 44px;
 }
 nav:last-of-type {
+  top: 44px;
   line-height: 52px;
   border-bottom: 1px solid #ddd;
 }
