@@ -55,7 +55,7 @@ section {
   width: 100%;
   display: none;
 }
-#show-scene-0 #scroll-section-0 > .sticky-elem,
+#show-scene-0 #scroll-section-0 .sticky-elem,
 #show-scene-1 #scroll-section-1 .sticky-elem,
 #show-scene-2 #scroll-section-2 .sticky-elem,
 #show-scene-3 #scroll-section-3 .sticky-elem {
@@ -111,15 +111,15 @@ nav:last-of-type > ul li a {
 }
 
 /* 1st Section */
-section:nth-of-type(1) {
+#scroll-section-0 {
   padding-top: 50vh;
 }
-section:nth-of-type(1) > h2 {
+#scroll-section-0 > h2 {
   font-size: var(--font-large);
   font-weight: var(--weight-extra-bold);
   text-align: center;
 }
-section:nth-of-type(1) > p {
+#scroll-section-0 > p {
   /* display: flex; */
   justify-content: center;
   align-items: center;
@@ -130,32 +130,32 @@ section:nth-of-type(1) > p {
 }
 
 /* 2nd Section */
-section:nth-of-type(2) > p strong {
+#scroll-section-1 > p strong {
   float: left;
   margin-right: 0.2em;
   color: var(--color-black);
   font-size: var(--font-medium);
   font-weight: var(--weight-extra-bold);
 }
-section:nth-of-type(2) > p {
+#scroll-section-1 > p {
   color: var(--color-gray);
 }
 
 /* 3rd Section */
-section:nth-of-type(3) > p:nth-of-type(1) small {
+#scroll-section-2 > p:nth-of-type(1) small {
   display: block;
   margin-bottom: 0.5em;
   font-size: 24px;
   font-weight: var(--weight-bold);
 }
-section:nth-of-type(3) > p:nth-of-type(1) {
+#scroll-section-2 > p:nth-of-type(1) {
   font-size: var(--font-medium);
   font-weight: var(--weight-extra-bold);
 }
-section:nth-of-type(3) > p:not(:nth-of-type(1)) {
+#scroll-section-2 > p:not(:nth-of-type(1)) {
   width: 20%;
 }
-section:nth-of-type(3) > p:not(:nth-of-type(1)) span {
+#scroll-section-2 > p:not(:nth-of-type(1)) span {
   display: block;
   width: 1px;
   height: 100px;
@@ -163,17 +163,17 @@ section:nth-of-type(3) > p:not(:nth-of-type(1)) span {
 }
 
 /* 4th Section */
-section:nth-of-type(4) > p:nth-of-type(1) strong {
+#scroll-section-3 > p:nth-of-type(1) strong {
   color: var(--color-black);
   font-size: var(--font-medium);
   font-weight: var(--weight-extra-bold);
 }
-section:nth-of-type(4) > p:nth-of-type(1) {
+#scroll-section-3 > p:nth-of-type(1) {
   color: var(--color-gray);
   font-size: var(--font-regular);
   font-weight: var(--weight-bold);
 }
-section:nth-of-type(4) > p:nth-of-type(2) {
+#scroll-section-3 > p:nth-of-type(2) {
   color: var(--color-gray);
 }
 
@@ -205,10 +205,10 @@ footer {
   }
 
   /* 3rd Section */
-  section:nth-of-type(3) > p:nth-of-type(1) small {
+  #scroll-section-3 > p:nth-of-type(1) small {
     font-size: 16px;
   }
-  section:nth-of-type(3) > p:not(:nth-of-type(1)) {
+  #scroll-section-3 > p:not(:nth-of-type(1)) {
     width: 50%;
   }
 }
