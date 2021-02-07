@@ -52,7 +52,7 @@
         // #scroll-section-1
         {
             type: 'normal',
-            //heigthNum: 5, // normal에서는 필요 X
+            heigthNum: 1.1, // normal에서는 필요 X
             scrollHeight: 0,
             objs: { // 섹션, 섹션 안 컨텐츠 객체 // 각 섹션 + 각 섹션 안 컨텐츠 가져오기
                 container: document.querySelector('#scroll-section-1'),
@@ -118,6 +118,13 @@
     // 함수 선언🟩 각 섹션 스크롤 높이 세팅
     function setLayout(){
         for(let i = 0; i < sceneInfo.length; i++){
+            // 각 섹션 스크롤 높이 = heightNum * 윈도우 창 높이
+            sceneInfo[i].scrollHeight = sceneInfo[i].heigthNum * window.innerHeight;
+            // 각 섹션에 스크롤 높이 세팅
+            sceneInfo[i].objs.container.style.height = `${sceneInfo[i].scrollHeight}px`;
+        }
+        /*
+        for(let i = 0; i < sceneInfo.length; i++){
             if(sceneInfo[i].type === 'sticky'){
                 // 각 섹션 스크롤 높이 = heightNum * 윈도우 창 높이
                 sceneInfo[i].scrollHeight = sceneInfo[i].heigthNum * window.innerHeight;
@@ -128,7 +135,8 @@
             // 각 섹션에 스크롤 높이 세팅
             sceneInfo[i].objs.container.style.height = `${sceneInfo[i].scrollHeight}px`;
         }
-
+        */
+       
         // 새로고침해도 현재 섹션 id 유지
         let totalScrollHeight = 0; // 총 스크롤 위치(높이)
         for(let i = 0; i< sceneInfo.length; i++){
