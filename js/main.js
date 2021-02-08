@@ -29,6 +29,8 @@
                 // canvas
                 videoImageCount: 300, // 이미지 갯수
                 imgSequence: [0,299], // 이미지 순서
+                canvas_opacity: [0, 1, { start: 0.9, end: 1 }], // canvas opacity
+                canvas_opacity: [1, 0, { start: 0.9, end: 1 }],
 
                 // 컨텐츠 들어올 때 (나타날 때)
                 // opacity
@@ -58,7 +60,7 @@
         // #scroll-section-1
         {
             type: 'normal',
-            heigthNum: 1.1, // normal에서는 필요 X
+            heigthNum: 1.5, // normal에서는 필요 X
             scrollHeight: 0,
             objs: { // 섹션, 섹션 안 컨텐츠 객체 // 각 섹션 + 각 섹션 안 컨텐츠 가져오기
                 container: document.querySelector('#scroll-section-1'),
@@ -235,8 +237,9 @@
                 case 0: // #scroll-section-0
                     // canvas
                     let sequence = Math.round(calcValues(values.imgSequence, currentYOffset)); // 현재 스크롤 위치에 따라 이미지 순서 적용 // 소수 -> 정수 반올림
-                    objs.context.drawImage(objs.videoImages[sequence], 0, 0); // 이미지 (이미지 배열 안에 들어 있는 이미지로) 그림
-
+                    objs.context.drawImage(objs.videoImages[sequence], 0, 0); // canvas 이미지 (이미지 배열 안에 들어 있는 이미지로) 그림
+                    objs.canvas.style.opacity = calcValues(values.canvas_opacity, currentYOffset); // canvas에 opacity css 적용
+                    
                     // opacity, translateY
                     if(scrollRatio <= 0.22){ // 현재 섹션 내 스크롤 범위 비율이 컨텐츠 시작점 사이면
                         objs.messageA.style.opacity = calcValues(values.messageA_opacity_in, currentYOffset); // A 컨텐츠에 opacity in css 적용
@@ -326,7 +329,11 @@
         yOffset = window.pageYOffset; // 현재 스크롤 위치
         scrollLoop(); // 실행
     });
-    window.addEventListener('load', setLayout); // 윈도우 창 새로고침하면, setlayout 변함
+    window.addEventListener('load', function(){ // 윈도우 창 새로고침하면,
+        setLayout(); // setlayout 변함
+        sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0); // 첫 번째 섹션 canvas 이미지 (이미지 배열 안에 들어 있는 이미지로) 그림
+
+    });
     window.addEventListener('resize',setLayout); // 윈도우 창 리사이즈하면, setlayout 변함
     
     setLayout();

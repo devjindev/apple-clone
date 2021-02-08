@@ -26,7 +26,7 @@ body {
   padding: 0;
   overflow-x: hidden;
   color: var(--color-black);
-  /* letter-spacing: -0.1em; */
+  letter-spacing: -0.1em;
   background-color: white;
   font-family: "Noto Sans KR", sans-serif;
 }
@@ -48,7 +48,7 @@ body > nav > div,
 body > section {
   max-width: 1000px;
   margin: 0 auto;
-  padding: 0 1%;
+  /* padding: 0 1%; */
 }
 body > section {
   border: 2px solid hotpink;
@@ -70,12 +70,14 @@ body .sticky-elem {
 body .sticky-elem-canvas {
   top: 0;
   height: 100%;
+  /* z-index: 1; */
   /* background-color: #ccc; */
 }
 body .sticky-elem-canvas canvas {
   position: absolute;
   top: 50%;
   left: 50%;
+  z-index: 1;
 }
 
 /* Navbar */
@@ -83,7 +85,7 @@ nav {
   position: absolute;
   left: 0;
   width: 100%;
-  z-index: 1;
+  z-index: 100;
 }
 nav:first-of-type {
   top: 0;
@@ -127,9 +129,12 @@ nav:last-of-type > div > ul li a {
 
 /* #scroll-section-0 */
 #scroll-section-0 > h2 {
+  position: relative;
+  top: -10vh;
   font-size: var(--font-large);
   font-weight: var(--weight-extra-bold);
   text-align: center;
+  z-index: 10;
 }
 #scroll-section-0 > p {
   /* display: flex; */
@@ -153,6 +158,7 @@ nav:last-of-type > div > ul li a {
 }
 #scroll-section-1 > p {
   color: var(--color-gray);
+  letter-spacing: 0;
 }
 
 /* #scroll-section-2 */
@@ -168,6 +174,7 @@ nav:last-of-type > div > ul li a {
 }
 #scroll-section-2 > p:not(:nth-of-type(1)) {
   width: 23%;
+  letter-spacing: 0;
 }
 #scroll-section-2 > p:not(:nth-of-type(1)) span {
   display: block;
@@ -197,6 +204,7 @@ nav:last-of-type > div > ul li a {
 }
 #scroll-section-3 > p:nth-of-type(2) {
   color: var(--color-gray);
+  letter-spacing: 0;
 }
 
 /* Footer */
@@ -219,6 +227,14 @@ footer {
     --font-regular: 8vw;
     --font-small: 14px;
     --font-micro: 12px;
+  }
+
+  /* Typotgraphy */
+  body > nav > div,
+  body > section {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 50vh 3% 0;
   }
 
   /* Nav */
