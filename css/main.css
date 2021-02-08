@@ -201,8 +201,8 @@ footer {
   :root {
     /* Font size */
     --font-large: 15vw;
-    --font-medium: 9vw;
-    --font-regular: 6vw;
+    --font-medium: 10vw;
+    --font-regular: 7vw;
     --font-small: 14px;
     --font-micro: 12px;
   }
