@@ -8,7 +8,7 @@
   --font-large: 112px;
   --font-medium: 72px;
   --font-regular: 48px;
-  --font-small: 16px;
+  --font-small: 20px;
   --font-micro: 12px;
 
   /* Font weight */
@@ -26,7 +26,7 @@ body {
   padding: 0;
   overflow-x: hidden;
   color: var(--color-black);
-  letter-spacing: -0.1em;
+  /* letter-spacing: -0.1em; */
   background-color: white;
   font-family: "Noto Sans KR", sans-serif;
 }
@@ -119,6 +119,9 @@ nav:last-of-type > div > ul li:not(:first-of-type) {
   margin-left: 2em;
 }
 /* a */
+nav:first-of-type {
+  font-size: 16px;
+}
 nav:last-of-type > div > h1 a i {
   font-size: 32px;
   color: #eb4034;
@@ -134,9 +137,11 @@ nav:last-of-type > div > ul li a {
   font-size: var(--font-large);
   font-weight: var(--weight-extra-bold);
   text-align: center;
+  letter-spacing: -0.03em;
   z-index: 10;
 }
-#scroll-section-0 > p {
+#scroll-section-0 > p,
+#scroll-section-2 > p:nth-of-type(1) {
   /* display: flex; */
   justify-content: center;
   align-items: center;
@@ -155,10 +160,10 @@ nav:last-of-type > div > ul li a {
   color: var(--color-black);
   font-size: var(--font-medium);
   font-weight: var(--weight-extra-bold);
+  letter-spacing: -0.03em;
 }
 #scroll-section-1 > p {
   color: var(--color-gray);
-  letter-spacing: 0;
 }
 
 /* #scroll-section-2 */
@@ -171,10 +176,11 @@ nav:last-of-type > div > ul li a {
 #scroll-section-2 > p:nth-of-type(1) {
   font-size: var(--font-medium);
   font-weight: var(--weight-extra-bold);
+  letter-spacing: -0.03em;
 }
 #scroll-section-2 > p:not(:nth-of-type(1)) {
-  width: 23%;
-  letter-spacing: 0;
+  width: 20%;
+  opacity: 0;
 }
 #scroll-section-2 > p:not(:nth-of-type(1)) span {
   display: block;
@@ -183,7 +189,7 @@ nav:last-of-type > div > ul li a {
   background-color: var(--color-black);
 }
 #scroll-section-2 > p:nth-of-type(2) {
-  top: 20%;
+  top: 13%;
   left: 53%;
 }
 #scroll-section-2 > p:nth-of-type(3) {
@@ -196,6 +202,7 @@ nav:last-of-type > div > ul li a {
   color: var(--color-black);
   font-size: var(--font-medium);
   font-weight: var(--weight-extra-bold);
+  letter-spacing: -0.03em;
 }
 #scroll-section-3 > p:nth-of-type(1) {
   color: var(--color-gray);
@@ -204,7 +211,6 @@ nav:last-of-type > div > ul li a {
 }
 #scroll-section-3 > p:nth-of-type(2) {
   color: var(--color-gray);
-  letter-spacing: 0;
 }
 
 /* Footer */
