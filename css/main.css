@@ -42,17 +42,17 @@ a {
 }
 
 /* Typotgraphy */
-nav > div,
-section {
+body > nav > div,
+body > section {
   max-width: 1000px;
   margin: 0 auto;
   padding: 0 3%;
 }
-section {
+body > section {
   border: 2px solid hotpink;
   padding-top: 50vh;
 }
-.sticky-elem {
+body .sticky-elem {
   position: fixed;
   /* top: 0; */
   left: 0;
@@ -65,12 +65,17 @@ section {
 #show-scene-3 #scroll-section-3 .sticky-elem {
   display: block;
 }
+body canvas {
+  top: 0;
+  background-color: #ccc;
+}
 
 /* Navbar */
 nav {
   position: absolute;
   left: 0;
   width: 100%;
+  z-index: 1;
 }
 nav:first-of-type {
   top: 0;

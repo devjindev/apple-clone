@@ -20,28 +20,34 @@
                 messageA: document.querySelector('#scroll-section-0 > p:nth-of-type(1)'),
                 messageB: document.querySelector('#scroll-section-0 > p:nth-of-type(2)'),
                 messageC: document.querySelector('#scroll-section-0 > p:nth-of-type(3)'),
-                messageD: document.querySelector('#scroll-section-0 > p:nth-of-type(4)')
+                messageD: document.querySelector('#scroll-section-0 > p:nth-of-type(4)'),
+                canvas: document.querySelector('#scroll-section-0 > canvas'), // canvas
+                context: document.querySelector('#scroll-section-0 > canvas').getContext('2d'), // canvas 내용(이미지)
+                videoImages: [] // canvas 이미지 (담아둘) 배열
             },
             values:{ // 섹션 안 컨텐츠 값 객체 // 각 섹션 안 컨텐츠 값 설정
+                // canvas
+                videoImageCount: 300, // 이미지 갯수
+                imgSequence: [0,299], // 이미지 순서
+
                 // 컨텐츠 들어올 때 (나타날 때)
-                // 투명도
+                // opacity
                 messageA_opacity_in: [0, 1, { start: 0.1, end: 0.2 }], // 구간 10~20%
                 messageB_opacity_in: [0, 1, { start: 0.3, end: 0.4 }],
                 messageC_opacity_in: [0, 1, { start: 0.5, end: 0.6 }],
                 messageD_opacity_in: [0, 1, { start: 0.7, end: 0.8 }],
-                // y값
+                // translateY
                 messageA_translateY_in: [20, 0, { start: 0.1, end: 0.2 }], // 구간 10~20%
                 messageB_translateY_in: [20, 0, { start: 0.3, end: 0.4 }],
                 messageC_translateY_in: [20, 0, { start: 0.5, end: 0.6 }],
                 messageD_translateY_in: [20, 0, { start: 0.7, end: 0.8 }],
-                
                 // 컨텐츠 나갈 때 (사라질 때)
-                // 투명도
+                // opacity
                 messageA_opacity_out: [1, 0, { start: 0.25, end: 0.3 }], // 구간 25~30%
                 messageB_opacity_out: [1, 0, { start: 0.45, end: 0.5 }],
                 messageC_opacity_out: [1, 0, { start: 0.65, end: 0.7 }],
                 messageD_opacity_out: [1, 0, { start: 0.85, end: 0.9 }],
-                // y값
+                // translateY
                 messageA_translateY_out: [0, -20, { start: 0.25, end: 0.3 }], // 구간 25~30%
                 messageB_translateY_out: [0, -20, { start: 0.45, end: 0.5 }],
                 messageC_translateY_out: [0, -20, { start: 0.65, end: 0.7 }],
@@ -75,21 +81,21 @@
             },
             values: { // 섹션 안 컨텐츠 값 객체 // 각 섹션 안 컨텐츠 값 설정
                 // 컨텐츠 들어올 때 (나타날 때)
-                // 투명도
+                // opacity
                 messageA_opacity_in: [0, 1, { start: 0.25, end: 0.3 }],
                 messageB_opacity_in: [0, 1, { start: 0.6, end: 0.65 }],
                 messageC_opacity_in: [0, 1, { start: 0.87, end: 0.92 }],
-                // y값
+                // translateY
                 messageA_translateY_in: [20, 0, { start: 0.15, end: 0.2 }],
                 messageB_translateY_in: [30, 0, { start: 0.6, end: 0.65 }],
                 messageC_translateY_in: [30, 0, { start: 0.87, end: 0.92 }],
 
                 // 컨텐츠 나갈 때 (사라질 때)
-                // 투명도
+                // opacity
                 messageA_opacity_out: [1, 0, { start: 0.4, end: 0.45 }],
                 messageB_opacity_out: [1, 0, { start: 0.68, end: 0.73 }],
                 messageC_opacity_out: [1, 0, { start: 0.95, end: 1 }],
-                // y값
+                // translateY
                 messageA_translateY_out: [0, -20, { start: 0.4, end: 0.45 }],
                 messageB_translateY_out: [0, -20, { start: 0.68, end: 0.73 }],
                 messageC_translateY_out: [0, -20, { start: 0.95, end: 1 }],
@@ -114,6 +120,17 @@
             }
         }
     ];
+
+    // canvas 이미지 세팅 // 스크롤 위치에 따라 보이는 이미지 바뀜
+    function setCanvasImages(){
+        let imgElem;
+        for(let i = 0; i < sceneInfo[0].values.videoImageCount; i++){ // 이미지 갯수만큼 반복
+            imgElem = document.createElement('img'); // 이미지 요소 추가
+            imgElem.src =`../video/001/IMG_${6726+i}.JPG`; // 이미지 주소
+            sceneInfo[0].objs.videoImages.push(imgElem); // canvas 이미지 배열에 이미지 push
+        }
+    }
+    setCanvasImages();
 
     // 함수 선언🟩 각 섹션 스크롤 높이 세팅
     function setLayout(){
@@ -211,6 +228,11 @@
             
             switch(currentScene){ // 현재 활성화 섹션이
                 case 0: // #scroll-section-0
+                    // canvas
+                    let sequence = Math.round(calcValues(values.imgSequence, currentYOffset)); // 현재 스크롤 위치에 따라 이미지 순서 적용 // 소수 -> 정수 반올림
+                    objs.context.drawImage(objs.videoImages[sequence], 0, 0); // 이미지 (이미지 배열 안에 들어 있는 이미지로) 그림
+
+                    // opacity, translateY
                     if(scrollRatio <= 0.22){ // 현재 섹션 내 스크롤 범위 비율이 컨텐츠 시작점 사이면
                         objs.messageA.style.opacity = calcValues(values.messageA_opacity_in, currentYOffset); // A 컨텐츠에 opacity in css 적용
                         objs.messageA.style.transform = `translate3d(0, ${calcValues(values.messageA_translateY_in, currentYOffset)}%, 0)`; // A 컨텐츠에 translateY in css 적용
@@ -218,7 +240,6 @@
                         objs.messageA.style.opacity = calcValues(values.messageA_opacity_out, currentYOffset); // A 컨텐츠에 opacity out css 적용
                         objs.messageA.style.transform = `translate3d(0, ${calcValues(values.messageA_translateY_out, currentYOffset)}%, 0)`; // A 컨텐츠에 translateY out css 적용
                     }
-
                     if (scrollRatio <= 0.42) {
                         // in
                         objs.messageB.style.opacity = calcValues(values.messageB_opacity_in, currentYOffset);
@@ -228,7 +249,6 @@
                         objs.messageB.style.opacity = calcValues(values.messageB_opacity_out, currentYOffset);
                         objs.messageB.style.transform = `translate3d(0, ${calcValues(values.messageB_translateY_out, currentYOffset)}%, 0)`;
                     }
-        
                     if (scrollRatio <= 0.62) {
                         // in
                         objs.messageC.style.opacity = calcValues(values.messageC_opacity_in, currentYOffset);
@@ -238,7 +258,6 @@
                         objs.messageC.style.opacity = calcValues(values.messageC_opacity_out, currentYOffset);
                         objs.messageC.style.transform = `translate3d(0, ${calcValues(values.messageC_translateY_out, currentYOffset)}%, 0)`;
                     }
-        
                     if (scrollRatio <= 0.82) {
                         // in
                         objs.messageD.style.opacity = calcValues(values.messageD_opacity_in, currentYOffset);

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
+	<title>02-image (Viedo to Image)</title>
 	<style>
 		* {
 			margin: 0;
@@ -33,7 +33,7 @@
 		let progress;
 		let currentFrame;
 
-		function setImages() {
+		function setImages() { // 전체 이미지 불러옴 (각 이미지 반복)
 			for (let i = 0; i < totalImagesCount; i++) {
 				let imgElem = new Image();
 				imgElem.src = `../video/002/IMG_${7027 + i}.JPG`;
@@ -51,7 +51,7 @@
 
 				requestAnimationFrame(function () {
 					currentFrame = Math.round((totalImagesCount - 1) * progress);
-					imgElem.src = videoImages[currentFrame].src;
+					imgElem.src = videoImages[currentFrame].src; // 이미지 세팅
 				});
 			});
 		}

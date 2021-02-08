@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
+	<title>03-canvas (Viedo to Image)</title>
 	<style>
 		* {
 			margin: 0;
@@ -28,13 +28,13 @@
 
 	<script>
 		const canvas = document.querySelector('.sample-canvas');
-		const context = canvas.getContext('2d');
-		const videoImages = [];
+		const context = canvas.getContext('2d'); // canvas 내용(이미지)
+		const videoImages = []; // canvas 이미지 (담아둘) 배열
 		let totalImagesCount = 960;
 		let progress;
 		let currentFrame;
 
-		function setImages() {
+		function setImages() { // 전체 이미지 불러옴 (각 이미지 반복)
 			for (let i = 0; i < totalImagesCount; i++) {
 				let imgElem = new Image();
 				imgElem.src = `../video/002/IMG_${7027 + i}.JPG`;
@@ -44,15 +44,16 @@
 
 		function init() {
 			document.body.classList.remove('before-load');
-			context.drawImage(videoImages[0], 0, 0);
+			context.drawImage(videoImages[0], 0, 0); // 처음에는 첫 번째 이미지 그림 (초기화)
 
+			// 스크롤 했을 때 progress 비율마다 해당하는 이미지 그릴거임
 			window.addEventListener('scroll', function () {
 				progress = pageYOffset / (document.body.offsetHeight - window.innerHeight);
 				if (progress < 0) progress = 0;
 				if (progress > 1) progress = 1;
 
 				currentFrame = Math.round((totalImagesCount - 1) * progress);
-				context.drawImage(videoImages[currentFrame], 0, 0);
+				context.drawImage(videoImages[currentFrame], 0, 0); // canvas 이미지 그림
 			});
 		}
 
