@@ -21,8 +21,8 @@
                 messageB: document.querySelector('#scroll-section-0 > p:nth-of-type(2)'),
                 messageC: document.querySelector('#scroll-section-0 > p:nth-of-type(3)'),
                 messageD: document.querySelector('#scroll-section-0 > p:nth-of-type(4)'),
-                canvas: document.querySelector('#scroll-section-0 > canvas'), // canvas
-                context: document.querySelector('#scroll-section-0 > canvas').getContext('2d'), // canvas 내용(이미지)
+                canvas: document.querySelector('#scroll-section-0 .sticky-elem-canvas canvas'), // canvas
+                context: document.querySelector('#scroll-section-0 .sticky-elem-canvas canvas').getContext('2d'), // canvas 내용(이미지)
                 videoImages: [] // canvas 이미지 (담아둘) 배열
             },
             values:{ // 섹션 안 컨텐츠 값 객체 // 각 섹션 안 컨텐츠 값 설정
@@ -164,6 +164,11 @@
             }
         }
         document.body.setAttribute('id', `show-scene-${currentScene}`); // body에 id(현재 활성화된 씬 연결) 추가
+
+        // canvas
+        // 섹션 높이에 맞춰 캔버스 높이 조절
+        const heightRatio = window.innerHeight / 1080; // canvas 높이 비율 = 윈도우 창 크기 / 원래 캔버스 높이
+		sceneInfo[0].objs.canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${heightRatio})`; // canvas에 translate3d, scale css 적용
     }
     
     // 함수 선언🟩 현재 들어온(화면에 있는) 섹션만 활성화하기

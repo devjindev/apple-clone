@@ -9,7 +9,7 @@
   --font-medium: 72px;
   --font-regular: 48px;
   --font-small: 16px;
-  --font-micro: 14px;
+  --font-micro: 12px;
 
   /* Font weight */
   --weight-extra-bold: 900;
@@ -26,11 +26,13 @@ body {
   padding: 0;
   overflow-x: hidden;
   color: var(--color-black);
-  letter-spacing: -0.1em;
+  /* letter-spacing: -0.1em; */
   background-color: white;
+  font-family: "Noto Sans KR", sans-serif;
 }
 body * {
   font-weight: var(--weight-reaular);
+  font-family: "Noto Sans KR", sans-serif;
 }
 ul {
   list-style: none;
@@ -46,7 +48,7 @@ body > nav > div,
 body > section {
   max-width: 1000px;
   margin: 0 auto;
-  padding: 0 3%;
+  padding: 0 1%;
 }
 body > section {
   border: 2px solid hotpink;
@@ -65,9 +67,15 @@ body .sticky-elem {
 #show-scene-3 #scroll-section-3 .sticky-elem {
   display: block;
 }
-body canvas {
+body .sticky-elem-canvas {
   top: 0;
-  background-color: #ccc;
+  height: 100%;
+  /* background-color: #ccc; */
+}
+body .sticky-elem-canvas canvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
 }
 
 /* Navbar */
@@ -80,6 +88,7 @@ nav {
 nav:first-of-type {
   top: 0;
   line-height: 44px;
+  text-transform: capitalize;
 }
 nav:last-of-type {
   top: 44px;
@@ -205,9 +214,9 @@ footer {
   /* Global */
   :root {
     /* Font size */
-    --font-large: 15vw;
-    --font-medium: 10vw;
-    --font-regular: 7vw;
+    --font-large: 17vw;
+    --font-medium: 11vw;
+    --font-regular: 8vw;
     --font-small: 14px;
     --font-micro: 12px;
   }
