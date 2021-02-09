@@ -417,6 +417,7 @@
                 
                 // #scroll-section-3
                 case 3:
+                    let step = 0 ; // 캔버스가 브라우저 상단에 닿았나 안 닿았나 구분
                     // 가로-세로 모두 꽉 차게 하기 위해 세팅(계산 필요)
                     const widthRatio = window.innerWidth / objs.canvas.width; // 캔버스 너비 비율 = 윈도우 창 너비 / 캔버스 너비
                     const heightRatio = window.innerHeight / objs.canvas.height; // 캔버스 높이 비율 = 윈도우 창 높이 / 캔버스 높이
@@ -470,6 +471,12 @@
                         parseInt(whiteRectWidth), // width
                         objs.canvas.height // height
                     );
+
+                    if(){ // 캔버스가 브라우저 상단에 닿지 않았다면
+                        step = 1;
+                    }else{
+                        step = 2;
+                    }
 
                     break;
             }
