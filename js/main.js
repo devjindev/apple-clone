@@ -2,20 +2,20 @@
 
 // 전역 변수 사용 피하기 위해 전체 틀 함수 생성 // 함수 바로 호출
 (function(){
-    // 변수 선언🟨 collection
+    //! 변수 선언> collection
     let yOffset = 0; // yOffset // window.pageYOffset 대입
     let prevScrollHeight = 0; // 현재 스크롤 위치(yOffset)보다 이전에 위치한 섹션들의 스크롤 높이의 합
     let currentScene = 0; // 현재 활성화된 섹션
     let enterNewScene = false; // 새로운 섹션에 들어간 순간 true
 
-    // 변수 선언🟨 각 섹션 모두 선언 // 배열
+    //! 변수 선언> 각 섹션 모두 선언 // 배열
     const sceneInfo = [
-        // #scroll-section-0
+        //* #scroll-section-0
         {
             type: 'sticky',
             heigthNum: 5, // 브라우저 높이의 5배로 scrollHeight 세팅
             scrollHeight: 0, // 각 섹션 스크롤 높이 // 기기마다 유동적
-            objs:{ // 섹션, 섹션 안 컨텐츠 객체 // 각 섹션 + 각 섹션 안 컨텐츠 가져오기
+            objs:{ //? 섹션, 섹션 안 컨텐츠 객체 // 각 섹션 + 각 섹션 안 컨텐츠 가져오기
                 container: document.querySelector('#scroll-section-0'),
                 messageA: document.querySelector('#scroll-section-0 > p:nth-of-type(1)'),
                 messageB: document.querySelector('#scroll-section-0 > p:nth-of-type(2)'),
@@ -25,7 +25,7 @@
                 context: document.querySelector('#scroll-section-0 .sticky-elem-canvas canvas').getContext('2d'), // canvas 내용(이미지)
                 videoImages: [] // canvas 이미지 (담아둘) 배열
             },
-            values:{ // 섹션 안 컨텐츠 값 객체 // 각 섹션 안 컨텐츠 값 설정
+            values:{ //? 섹션 안 컨텐츠 값 객체 // 각 섹션 안 컨텐츠 값 설정
                 // canvas
                 videoImageCount: 300, // 이미지 갯수
                 imgSequence: [0,299], // 이미지 순서
@@ -56,7 +56,7 @@
             }
         },
 
-        // #scroll-section-1
+        //* #scroll-section-1
         {
             type: 'normal',
             heigthNum: 1.5, // normal에서는 필요 X
@@ -67,7 +67,7 @@
             }
         },
 
-        // #scroll-section-2
+        //* #scroll-section-2
         {
             type: 'sticky',
             heigthNum: 5,
@@ -116,7 +116,7 @@
             }
         },
 
-        // #scroll-section-3
+        //* #scroll-section-3
         {
             type: 'sticky',
             heigthNum: 5,
@@ -145,9 +145,31 @@
         }
     ];
 
-    // 함수 선언🟩 canvas 이미지 세팅 // 스크롤 위치에 따라 보이는 이미지 바뀜
+    //! 함수 선언> Bottom Navbar sticky
+    function checkMenu(){
+        const navbar = document.querySelector('nav:last-of-type'); // navbar
+
+        if(yOffset > 44){ // 현재 스크롤 크기가 44(Top navbar 높이)보다 크면
+            navbar.classList.add('sticky-nav'); // navbar에 'sticky-nav' class 추가
+        }else{ // 그 외면
+            navbar.classList.remove('sticky-nav'); // navbar에 'sticky-nav' class 삭제
+        }
+
+        // const navbar = document.querySelector('nav'); // navbar
+        // const navbarHeignt = navbar.getBoundingClientRect().height; // navbar height
+
+        // document.addEventListener('scroll', () => { // document scroll 하면
+        //     if(window.scrollY > navbarHeignt){ // scroll이 navbar height 보다 크면
+        //         navbar.classList.add('scrolled'); // navbar에 'scrolled' Class 추가
+        //     }else{ // 그 외면
+        //         navbar.classList.remove('scrolled'); // navbar에 'scrolled' Class 삭제
+        //     }
+        // });
+    }
+
+    //! 함수 선언> canvas 이미지 세팅 // 스크롤 위치에 따라 보이는 이미지 바뀜
     function setCanvasImages(){
-        // #scroll-section-0
+        //* #scroll-section-0
         let imgElem;
         for(let i = 0; i < sceneInfo[0].values.videoImageCount; i++){ // 이미지 갯수만큼 반복
             imgElem = document.createElement('img'); // 이미지 요소 추가
@@ -155,7 +177,7 @@
             sceneInfo[0].objs.videoImages.push(imgElem); // canvas 이미지 배열에 이미지 push
         }
 
-        // #scroll-section-1
+        //* #scroll-section-1
         let imgElem2;
         for(let i = 0; i < sceneInfo[2].values.videoImageCount; i++){ // 이미지 갯수만큼 반복
             imgElem2 = document.createElement('img'); // 이미지 요소 추가
@@ -163,7 +185,7 @@
             sceneInfo[2].objs.videoImages.push(imgElem2); // canvas 이미지 배열에 이미지 push
         }
 
-        // #scroll-section-3
+        //* #scroll-section-3
         let imgElem3;
 		for (let i = 0; i < sceneInfo[3].objs.imagesPath.length; i++) { // 이미지 갯수만큼 반복
 			imgElem3 = document.createElement('img'); // 이미지 요소 추가
@@ -173,7 +195,7 @@
     }
     setCanvasImages();
 
-    // 함수 선언🟩 각 섹션 스크롤 높이 세팅
+    //! 함수 선언> 각 섹션 스크롤 높이 세팅
     function setLayout(){
         for(let i = 0; i < sceneInfo.length; i++){
             // 각 섹션 스크롤 높이 = heightNum * 윈도우 창 높이
@@ -194,8 +216,8 @@
             sceneInfo[i].objs.container.style.height = `${sceneInfo[i].scrollHeight}px`;
         }
         */
-       
-        // 새로고침해도 현재 섹션 id 유지
+        
+        //? 새로고침해도 현재 섹션 id 유지
         let totalScrollHeight = 0; // 총 스크롤 위치(높이)
         for(let i = 0; i< sceneInfo.length; i++){
             totalScrollHeight += sceneInfo[i].scrollHeight; // 총 스크롤 위치(높이) = 총 스크롤 위치 + 이전 섹션 스크롤 높이
@@ -206,14 +228,14 @@
         }
         document.body.setAttribute('id', `show-scene-${currentScene}`); // body에 id(현재 활성화된 씬 연결) 추가
 
-        // canvas
+        //? canvas
         // 섹션 높이에 맞춰 캔버스 높이 조절
         const heightRatio = window.innerHeight / 1080; // canvas 높이 비율 = 윈도우 창 크기 / 원래 캔버스 높이
 		sceneInfo[0].objs.canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${heightRatio})`; // canvas에 translate3d, scale css 적용
         sceneInfo[2].objs.canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${heightRatio})`; // canvas에 translate3d, scale css 적용
     }
     
-    // 함수 선언🟩 현재 들어온(화면에 있는) 섹션만 활성화하기
+    //! 함수 선언> 현재 들어온(화면에 있는) 섹션만 활성화하기
     function scrollLoop(){
         enterNewScene = false; // 새로운 섹션에 들어간 순간 true
         prevScrollHeight = 0; // 0으로 초기화 (누적되지 않게)
@@ -239,7 +261,7 @@
         }
 
 
-        // 함수 선언🟩 스크롤 시 애니메이션(각 섹션 안 컨텐츠 값) 애니메이션 계산
+        //! 함수 선언> 스크롤 시 애니메이션(각 섹션 안 컨텐츠 값) 애니메이션 계산
         function calcValues(values, currentYOffset){
             let rv; // return value
             const scrollHeight = sceneInfo[currentScene].scrollHeight; // 현재 색션 스크롤 높이
@@ -264,7 +286,7 @@
             return rv;
         }
 
-        // 함수 선언🟩 스크롤 시 애니메이션 설정
+        //! 함수 선언> 스크롤 시 애니메이션 설정
         function playAnimation(){
             // currentYOffset에 따라 values 달라짐
             const objs = sceneInfo[currentScene].objs; // 각 섹션 + 각 섹션 안 컨텐츠 가져오기
@@ -274,7 +296,7 @@
             const scrollRatio = currentYOffset / scrollHeight; // 현재 섹션에서 스크롤된 범위의 비율 = 현재 섹션의 처음에서 얼만큼 스크롤 됐냐 / 현재 섹션 스크롤 높이
             
             switch(currentScene){ // 현재 활성화 섹션이
-                // #scroll-section-0
+                //* #scroll-section-0
                 case 0:
                     // canvas
                     let sequence = Math.round(calcValues(values.imgSequence, currentYOffset)); // 현재 스크롤 위치에 따라 이미지 순서 적용 // 소수 -> 정수 반올림
@@ -319,10 +341,10 @@
 
                     break;
                 
-                // #scroll-section-1
+                //* #scroll-section-1
                 //case 1: // normal에서는 필요 X
                 
-                // #scroll-section-2
+                //* #scroll-section-2
                 case 2:
                     //canvas
                     let sequence2 = Math.round(calcValues(values.imgSequence, currentYOffset)); // 현재 스크롤 위치에 따라 이미지 순서 적용 // 소수 -> 정수 반올림
@@ -368,7 +390,7 @@
                         objs.pinC.style.transform = `scaleY(${calcValues(values.pinC_scaleY, currentYOffset)})`;
                     }
 
-                    // 🟦 #scroll-section-3 미리 그려줌 (걍 가만히 올라오는 상태(애니메이션 X))
+                    //? #scroll-section-3 미리 그려줌 (걍 가만히 올라오는 상태(애니메이션 X))
                     if(scrollRatio > 0.9){ // #scroll-section-2 끝날 때쯤
                         const objs = sceneInfo[3].objs; // objs 객체 다시 선언
                         const values = sceneInfo[3].values; // valus 객체 다시 선언
@@ -419,7 +441,7 @@
 
                     break;
                 
-                // #scroll-section-3
+                //* #scroll-section-3
                 case 3:
                     let step = 0 ; // 캔버스가 브라우저 상단에 닿았나 안 닿았나 구분
                     // 가로-세로 모두 꽉 차게 하기 위해 세팅(애니메이션 계산 필요)
@@ -427,6 +449,8 @@
                     const heightRatio = window.innerHeight / objs.canvas.height; // 캔버스 높이 비율 = 윈도우 창 높이 / 캔버스 높이
                     let canvasScaleRatio; // 캔버스 확대 비율
 
+                    //* image[0]
+                    //? 캔버스 scale
                     if (widthRatio <= heightRatio) { // 높이 비율이 너비 비율보다 크거나 같으면
                         canvasScaleRatio = heightRatio; // 캔버스 확대 비율 = 높이 비율
                     } else { // 그 외면 (너비 비율이 높이 비율보다 크면)
@@ -437,12 +461,12 @@
                     objs.context.drawImage(objs.images[0], 0, 0); // 첫 번째 canvas 이미지 그림
                     objs.context.fillStyle = 'white';
 
-                    // ⬜
+                    //? ⬜
                     // 캔버스 내 innerWidth와 innerHeight (양옆 흰 박스를 위해 캔버스 크기 재애니메이션 계산)
                     const recalculatedInnerWidth = window.innerWidth / canvasScaleRatio; // 캔버스 너비 = 윈도우(스크롤 너비 제외) 창 너비 / 캔버스 확대 비율 // 💖
                     const recalculatedInnerHeight = window.innerHeight / canvasScaleRatio; // 캔버스 높이 = 윈도우 창 높이 / 캔버스 확대 비율
 
-                    // 맨 처음 흰박스 y 위치 (맨 처음만 실행됨)
+                    //? 맨 처음 흰박스 y 위치 (맨 처음만 실행됨)
                     if (!values.rectStartY) { // rectStartY가 값이 없으면 (0이면)
                         // values.rectStartY = objs.canvas.getBoundingClientRect().top; // 흰박스 시작 y 위치 = 캔버스 top 위치
                         // 흰박스 시작 y 위치 = 원래 캔버스 top 위치 + ((원래 캔버스 높이 - 재애니메이션 계산 캔버스 높이)/2)
@@ -453,14 +477,14 @@
                         values.rect2X[2].end = values.rectStartY / scrollHeight; // 오른쪽 흰박스 (애니메이션) 최종위치 = 흰박스 시작 y 위치 / 현재 섹션 높이
                     }
                     
-                    // 흰박스 위치 및 크기 애니메이션 계산
+                    //? 흰박스 위치 및 크기 애니메이션 계산
                     const whiteRectWidth = recalculatedInnerWidth * 0.15; // 양옆 흰박스 너비(크기) = 재너비 비율의 15%
                     values.rect1X[0] = (objs.canvas.width - recalculatedInnerWidth) / 2; // 왼쪽 흰박스 시작 timing
                     values.rect1X[1] = values.rect1X[0] - whiteRectWidth; // 왼쪽 흰박스 최종위치 (밀려날 때)
                     values.rect2X[0] = values.rect1X[0] + recalculatedInnerWidth - whiteRectWidth; // 오른쪽 흰박스 시작 timing
                     values.rect2X[1] = values.rect2X[0] + whiteRectWidth; // 오른쪽 흰박스 최종위치 (밀려날 때)
                     
-                    // 흰박스 위치 및 크기 세팅(그리기)
+                    //? 흰박스 위치 및 크기 세팅(그리기)
                     //objs.context.fillRect(values.rect1X[0], 0, parseInt(whiteRectWidth), objs.canvas.height); // 왼쪽 // x, y, width, height
                     //objs.context.fillRect(values.rect2X[0], 0, parseInt(whiteRectWidth), objs.canvas.height); // 오른쪽 // x, y, width, height
                     objs.context.fillRect( // 왼쪽 흰박스
@@ -476,13 +500,14 @@
                         objs.canvas.height // height
                     );
 
+                    //* image[1]
                     if(scrollRatio < values.rect1X[2].end){ // 캔버스가 브라우저 상단에 닿지 않았다면 // 현재 섹션 내 스크롤 크기가 흰박스 끝 timing보다 크면
                         step = 1;
                         objs.canvas.classList.remove('sticky-canvas'); // 캔버스에 'sticky-canvas' class 삭제
                     }else{ // 그 외면 (캔버스가 브라우저 상단에 닿았으면)
                         step = 2;
                         
-                        // image[1] 블렌드
+                        //? image[1] 블렌드
                         // blendHeight: [0, 0, { start: 0, end: 0 }],
                         values.blendHeight[0] = 0; // 블렌드 초기값
                         values.blendHeight[1] = objs.canvas.height; // 블렌드 끝 값 // 캔버스 높이
@@ -500,9 +525,9 @@
                         objs.canvas.classList.add('sticky-canvas'); // 캔버스 fixed // 캔버스에 'sticky-canvas' class 추가 
                         objs.canvas.style.top = `${-(objs.canvas.height - (objs.canvas.height * canvasScaleRatio)) / 2}px` // canvas에 top css 적용 // -{(원래 캔버스 높이 - 재애니메이션 계산 캔버스 높이)/2}px
 
-                        // 🟪 블렌드 끝
+                        //* 블렌드 끝
 
-                        // images[1] 블렌드 후 scale
+                        //? images[1] 블렌드 후 scale
                         //canvas_scale: [0, 0, { start: 0, end: 0 }],
                         if(scrollRatio > values.blendHeight[2].end){ // 블렌드가 끝나면 // 현재 섹션 내 스크롤 크기가 블렌드 끝 timing보다 크면
                             values.canvas_scale[0] =  canvasScaleRatio; // 초기값 = 이전에 계산된 캔버스 scale
@@ -514,19 +539,21 @@
                             objs.canvas.style.marginTop = 0;  // canvas에 margin-top css 적용 // (아래 코드에서) 위로 올라갈 때 다시 margin-top 없어줌 (안하면 margin-top 때문에 안보여서)
                         }
 
-                        // 🟪 스케일 끝
+                        //* 스케일 끝
 
+                        //? scale 후 p:nth-of-type(2) opasity, translateY
                         // 스케일이 끝나면 // 현재 섹션 내 스크롤 크기가 scale 끝 timing보다 크고
                         //scale 끝 timong이 0보다 크면(끝 timing이 0일 때(아직 scale 동작 X) 동작 방지))
                         if((scrollRatio > values.canvas_scale[2].end) && (values.canvas_scale[2].end > 0)){
                             objs.canvas.classList.remove('sticky-canvas'); // 캔버스에 'sticky-canvas' class 삭제
                             objs.canvas.style.marginTop = `${scrollHeight * 0.4}px`;  // canvas에 margin-top css 적용 // 스크롤 20% 동안 블렌드됨 + 스크롤 20% 동안 스케일 조정함 = 40% (스크롤 0.4)
                             
-                            // p:nth-of-type(2)
+                            //? opacity
                             //canvasCaption_opacity: [0, 1, { start: 0, end: 0}],
                             values.canvasCaption_opacity[2].start = values.canvas_scale[2].end; // p opcity 시작 timing = 캔버스 scale 끝 timing 
                             values.canvasCaption_opacity[2].end = values.canvasCaption_opacity[2].start + 0.1; // p opacity 끝 timing = p opacticy 시작 타이밍 + 스크롤 0.1(10%)
                             objs.canvasCaption.style.opacity = calcValues(values.canvasCaption_opacity, currentYOffset); // p에 opacity css 적용 // opctity 애니메이션 계산 ↔ 현재 섹션 내 스크롤 높이
+                            //? translateY
                             //canvasCaption_translateY: [20, 0, { start: 0, end: 0}],
                             values.canvasCaption_translateY[2].start = values.canvas_scale[2].end; // p translateY 시작 timing = 캔버스 scale 끝 timing 
                             values.canvasCaption_translateY[2].end = values.canvasCaption_translateY[2].start + 0.1; // p translateY 끝 timing = p translateY 시작 타이밍 + 스크롤 0.1(10%)
@@ -540,9 +567,11 @@
         playAnimation();
     }
 
+    //! 이벤트 리스너
     window.addEventListener('scroll',function(){ // 윈도우 창 스크롤하면,
         yOffset = window.pageYOffset; // 현재 스크롤 위치
         scrollLoop(); // 실행
+        checkMenu(); // 실행
     });
     window.addEventListener('load', function(){ // 윈도우 창 새로고침하면,
         setLayout(); // setlayout 변함
