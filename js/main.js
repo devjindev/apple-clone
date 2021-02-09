@@ -386,7 +386,7 @@
 
                         // ⬜
                         // 캔버스 내 innerWidth와 innerHeight (양옆 흰 박스를 위해 캔버스 크기 재계산)
-                        const recalculatedInnerWidth = document.body.offsetWidth / canvasScaleRatio; // 캔버스 너비 = 윈도우(스크롤 너비 제외) 창 너비 / 캔버스 확대 비율 // 💖
+                        const recalculatedInnerWidth = window.innerWidth / canvasScaleRatio; // 캔버스 너비 = 윈도우(스크롤 너비 제외) 창 너비 / 캔버스 확대 비율 // 💖
                         const recalculatedInnerHeight = window.innerHeight / canvasScaleRatio; // 캔버스 높이 = 윈도우 창 높이 / 캔버스 확대 비율
                         
                         // 흰박스 위치 및 크기 계산
@@ -435,16 +435,16 @@
 
                     // ⬜
                     // 캔버스 내 innerWidth와 innerHeight (양옆 흰 박스를 위해 캔버스 크기 재계산)
-                    const recalculatedInnerWidth = document.body.offsetWidth / canvasScaleRatio; // 캔버스 너비 = 윈도우(스크롤 너비 제외) 창 너비 / 캔버스 확대 비율 // 💖
+                    const recalculatedInnerWidth = window.innerWidth / canvasScaleRatio; // 캔버스 너비 = 윈도우(스크롤 너비 제외) 창 너비 / 캔버스 확대 비율 // 💖
                     const recalculatedInnerHeight = window.innerHeight / canvasScaleRatio; // 캔버스 높이 = 윈도우 창 높이 / 캔버스 확대 비율
 
                     // 맨 처음 흰박스 y 위치 (맨 처음만 실행됨)
-                    if(!values.rectStartY){ // rectStartY가 값이 없으면 (0이면)
-                        //values.rectStartY = objs.canvas.getBoundingClientRect().top; // 흰박스 시작 y 위치 = 캔버스 top 위치
+                    if (!values.rectStartY) { // rectStartY가 값이 없으면 (0이면)
+                        // values.rectStartY = objs.canvas.getBoundingClientRect().top; // 흰박스 시작 y 위치 = 캔버스 top 위치
                         // 흰박스 시작 y 위치 = 원래 캔버스 top 위치 + ((원래 캔버스 높이 - 재계산 캔버스 높이)/2)
-                        values.rectStartY = objs.canvas.offsetTop + ((objs.canvas.height - (objs.canvas.height * canvasScaleRatio)) / 2);
-                        values.rect1X[2].start = (window.innerHeight/2) / scrollHeight; // 왼쪽 흰박스 (애니메이션) 시작 위치 = (윈도우 창 높이/2) / 현재 섹션 높이
-                        values.rect2X[2].start = (window.innerHeight/2) / scrollHeight; // 오른쪽 흰박스 (애니메이션) 시작 위치 = (윈도우 창 높이/2) / 현재 섹션 높이
+                        values.rectStartY = objs.canvas.offsetTop + (objs.canvas.height - objs.canvas.height * canvasScaleRatio) / 2;
+                        values.rect1X[2].start = (window.innerHeight / 2) / scrollHeight; // 왼쪽 흰박스 (애니메이션) 시작 위치 = (윈도우 창 높이/2) / 현재 섹션 높이
+                        values.rect2X[2].start = (window.innerHeight / 2) / scrollHeight; // 오른쪽 흰박스 (애니메이션) 시작 위치 = (윈도우 창 높이/2) / 현재 섹션 높이
                         values.rect1X[2].end = values.rectStartY / scrollHeight; // 왼쪽 흰박스 (애니메이션) 끝 위치 = 흰박스 시작 y 위치 / 현재 섹션 높이
                         values.rect2X[2].end = values.rectStartY / scrollHeight; // 오른쪽 흰박스 (애니메이션) 끝 위치 = 흰박스 시작 y 위치 / 현재 섹션 높이
                     }
@@ -452,9 +452,9 @@
                     // 흰박스 위치 및 크기 계산
                     const whiteRectWidth = recalculatedInnerWidth * 0.15; // 양옆 흰박스 너비(크기) = 재너비 비율의 15%
                     values.rect1X[0] = (objs.canvas.width - recalculatedInnerWidth) / 2; // 왼쪽 흰박스 시작 위치
-				    values.rect1X[1] = values.rect1X[0] - whiteRectWidth; // 왼쪽 흰박스 끝 위치 (밀려날 때)
-				    values.rect2X[0] = values.rect1X[0] + recalculatedInnerWidth - whiteRectWidth; // 오른쪽 흰박스 시작 위치
-				    values.rect2X[1] = values.rect2X[0] + whiteRectWidth; // 오른쪽 흰박스 끝 위치 (밀려날 때)
+                    values.rect1X[1] = values.rect1X[0] - whiteRectWidth; // 왼쪽 흰박스 끝 위치 (밀려날 때)
+                    values.rect2X[0] = values.rect1X[0] + recalculatedInnerWidth - whiteRectWidth; // 오른쪽 흰박스 시작 위치
+                    values.rect2X[1] = values.rect2X[0] + whiteRectWidth; // 오른쪽 흰박스 끝 위치 (밀려날 때)
                     
                     // 흰박스 위치 및 크기 세팅(그리기)
                     //objs.context.fillRect(values.rect1X[0], 0, parseInt(whiteRectWidth), objs.canvas.height); // 왼쪽 // x, y, width, height
@@ -472,10 +472,16 @@
                         objs.canvas.height // height
                     );
 
-                    if(){ // 캔버스가 브라우저 상단에 닿지 않았다면
+                    if(scrollRatio < values.rect1X[2].end){ // 캔버스가 브라우저 상단에 닿지 않았다면 // 현재 섹션 내 스크롤 크기가 흰박스 끝지점보다 크면
                         step = 1;
-                    }else{
+                        console.log('캔버스 닿기 전');
+                        // 이미지 블렌드
+                        objs.canvas.classList.remove('sticky-canvas'); // 캔버스에 'sticky-canvas' class 삭제
+                    }else{ // 그 외면 (캔버스가 브라우저 상단에 닿았으면)
                         step = 2;
+                        console.log('캔버스 닿은 후');
+                        objs.canvas.classList.add('sticky-canvas'); // 캔버스 fixed // 캔버스에 'sticky-canvas' class 추가 
+                        objs.canvas.style.top = `${-(objs.canvas.height - (objs.canvas.height * canvasScaleRatio)) / 2}px` // canvas에 top css 적용 // -{(원래 캔버스 높이 - 재계산 캔버스 높이)/2}px
                     }
 
                     break;

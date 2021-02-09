@@ -220,6 +220,12 @@ nav:last-of-type > div > ul li a {
 #scroll-section-3 > canvas {
   /* align-items: center; */
   background-color: rgba(0, 0, 0, 0.1);
+  width: 1920px;
+  height: 1080px;
+}
+#scroll-section-3 > canvas.sticky-canvas {
+  position: fixed;
+  top: 0;
 }
 #scroll-section-3 > p:nth-of-type(2) {
   color: var(--color-gray);
