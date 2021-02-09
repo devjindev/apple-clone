@@ -1,6 +1,6 @@
 'use strict';
 
-// // 전역 변수 사용 피하기 위해 전체 틀 함수 생성 // 함수 바로 호출
+// 전역 변수 사용 피하기 위해 전체 틀 함수 생성 // 함수 바로 호출
 (function(){
     //! 변수 선언> collection
     let yOffset = 0; // yOffset // window.pageYOffset 대입
@@ -15,7 +15,7 @@
             type: 'sticky',
             heigthNum: 5, // 브라우저 높이의 5배로 scrollHeight 세팅
             scrollHeight: 0, // 각 섹션 스크롤 높이 // 기기마다 유동적
-            objs:{ //* 섹션, 섹션 안 컨텐츠 객체 // 각 섹션 + 각 섹션 안 컨텐츠 가져오기
+            objs:{ //? 섹션, 섹션 안 컨텐츠 객체 // 각 섹션 + 각 섹션 안 컨텐츠 가져오기
                 container: document.querySelector('#scroll-section-0'),
                 messageA: document.querySelector('#scroll-section-0 > p:nth-of-type(1)'),
                 messageB: document.querySelector('#scroll-section-0 > p:nth-of-type(2)'),
@@ -25,30 +25,30 @@
                 context: document.querySelector('#scroll-section-0 .sticky-elem-canvas canvas').getContext('2d'), // canvas 내용(이미지)
                 videoImages: [] // canvas 이미지 (담아둘) 배열
             },
-            values:{ //* 섹션 안 컨텐츠 값 객체 // 각 섹션 안 컨텐츠 값 설정
-                //? canvas
+            values:{ //? 섹션 안 컨텐츠 값 객체 // 각 섹션 안 컨텐츠 값 설정
+                // canvas
                 videoImageCount: 300, // 이미지 갯수
                 imgSequence: [0,299], // 이미지 순서
                 canvas_opacity: [1, 0, { start: 0.9, end: 1 }], // canvas opacity
 
-                //? 컨텐츠 들어올 때 (나타날 때)
-                //? opacity
+                // 컨텐츠 들어올 때 (나타날 때)
+                // opacity
                 messageA_opacity_in: [0, 1, { start: 0.1, end: 0.2 }], // 초기값, 최종값, 시작 timing, 끝 timing // 구간 10~20%
                 messageB_opacity_in: [0, 1, { start: 0.3, end: 0.4 }],
                 messageC_opacity_in: [0, 1, { start: 0.5, end: 0.6 }],
                 messageD_opacity_in: [0, 1, { start: 0.7, end: 0.8 }],
-                //? translateY
+                // translateY
                 messageA_translateY_in: [20, 0, { start: 0.1, end: 0.2 }], // 구간 10~20%
                 messageB_translateY_in: [20, 0, { start: 0.3, end: 0.4 }],
                 messageC_translateY_in: [20, 0, { start: 0.5, end: 0.6 }],
                 messageD_translateY_in: [20, 0, { start: 0.7, end: 0.8 }],
-                //? 컨텐츠 나갈 때 (사라질 때)
-                //? opacity
+                // 컨텐츠 나갈 때 (사라질 때)
+                // opacity
                 messageA_opacity_out: [1, 0, { start: 0.25, end: 0.3 }], // 구간 25~30%
                 messageB_opacity_out: [1, 0, { start: 0.45, end: 0.5 }],
                 messageC_opacity_out: [1, 0, { start: 0.65, end: 0.7 }],
                 messageD_opacity_out: [1, 0, { start: 0.85, end: 0.9 }],
-                //? translateY
+                // translateY
                 messageA_translateY_out: [0, -20, { start: 0.25, end: 0.3 }], // 구간 25~30%
                 messageB_translateY_out: [0, -20, { start: 0.45, end: 0.5 }],
                 messageC_translateY_out: [0, -20, { start: 0.65, end: 0.7 }],
@@ -84,32 +84,33 @@
                 videoImages: [] // canvas 이미지 (담아둘) 배열
             },
             values: { // 섹션 안 컨텐츠 값 객체 // 각 섹션 안 컨텐츠 값 설정
-                //? canvas
+                // canvas
                 videoImageCount: 960, // 이미지 갯수
                 imgSequence: [0,959], // 이미지 순서
                 canvas_opacity_in: [0, 1, { start: 0, end: 0.1 }], // canvas opacity in
                 canvas_opacity_out: [1, 0, { start: 0.95, end: 1 }], // canvas opacity out
 
-                //? 컨텐츠 들어올 때 (나타날 때)
-                //? opacity
+                // 컨텐츠 들어올 때 (나타날 때)
+                // opacity
                 messageA_opacity_in: [0, 1, { start: 0.25, end: 0.3 }],
                 messageB_opacity_in: [0, 1, { start: 0.6, end: 0.65 }],
                 messageC_opacity_in: [0, 1, { start: 0.87, end: 0.92 }],
-                //? translateY
+                // translateY
                 messageA_translateY_in: [20, 0, { start: 0.15, end: 0.2 }],
                 messageB_translateY_in: [30, 0, { start: 0.6, end: 0.65 }],
                 messageC_translateY_in: [30, 0, { start: 0.87, end: 0.92 }],
-                //? 컨텐츠 나갈 때 (사라질 때)
-                //? opacity
+
+                // 컨텐츠 나갈 때 (사라질 때)
+                // opacity
                 messageA_opacity_out: [1, 0, { start: 0.4, end: 0.45 }],
                 messageB_opacity_out: [1, 0, { start: 0.68, end: 0.73 }],
                 messageC_opacity_out: [1, 0, { start: 0.95, end: 1 }],
-                //? translateY
+                // translateY
                 messageA_translateY_out: [0, -20, { start: 0.4, end: 0.45 }],
                 messageB_translateY_out: [0, -20, { start: 0.68, end: 0.73 }],
                 messageC_translateY_out: [0, -20, { start: 0.95, end: 1 }],
 
-                //? span
+                // span
                 pinB_scaleY: [0.5, 1, { start: 0.6, end: 0.65 }],
                 pinC_scaleY: [0.5, 1, { start: 0.87, end: 0.92 }]
             }
@@ -132,7 +133,7 @@
                 images: [] // canvas 이미지 (담아둘) 배열
             },
             values: { // 섹션 안 컨텐츠 값 객체 // 각 섹션 안 컨텐츠 값 설정
-                //? ⬜
+                // ⬜
                 rect1X: [0, 0, { start: 0, end: 0 }], // 왼쪽 흰 박스
                 rect2X: [0, 0, { start: 0, end: 0 }], // 오른쪽 흰 박스
                 blendHeight: [0, 0, { start: 0, end: 0 }], // images[1] 블렌드 높이
@@ -285,7 +286,7 @@
             return rv;
         }
 
-        //! ⭐ 함수 선언> 스크롤 시 애니메이션 설정
+        //! 함수 선언> 스크롤 시 애니메이션 설정
         function playAnimation(){
             // currentYOffset에 따라 values 달라짐
             const objs = sceneInfo[currentScene].objs; // 각 섹션 + 각 섹션 안 컨텐츠 가져오기
@@ -300,20 +301,13 @@
                     // canvas
                     let sequence = Math.round(calcValues(values.imgSequence, currentYOffset)); // 현재 스크롤 위치에 따라 이미지 순서 적용 // 소수 -> 정수 반올림
                     objs.context.drawImage(objs.videoImages[sequence], 0, 0); // canvas 이미지 (이미지 배열 안에 들어 있는 이미지로) 그림
-                    // todo. canvas_opacity: [1, 0, { start: 0.9, end: 1 }],
                     objs.canvas.style.opacity = calcValues(values.canvas_opacity, currentYOffset); // canvas에 opacity css 애니메이션 계산-적용 ↔ 현재 섹션 내 스크롤 높이
                     
-                    //? opacity, translateY
+                    // opacity, translateY
                     if(scrollRatio <= 0.22){ // 현재 섹션 내 스크롤 범위 비율이 컨텐츠 시작점 사이면
-                        // in
-                        // todo. messageA_opacity_in: [0, 1, { start: 0.1, end: 0.2 }],
-                        // todo. messageA_translateY_in: [20, 0, { start: 0.1, end: 0.2 }],
                         objs.messageA.style.opacity = calcValues(values.messageA_opacity_in, currentYOffset); // A 컨텐츠에 opacity in css 애니메이션 계산-적용 ↔ 현재 섹션 내 스크롤 높이
                         objs.messageA.style.transform = `translate3d(0, ${calcValues(values.messageA_translateY_in, currentYOffset)}%, 0)`; // A 컨텐츠에 translateY in css 애니메이션 계산-적용 ↔ 현재 섹션 내 스크롤 높이
                     }else{ // 현재 섹션 내 스크롤 범위 비율이 컨텐츠 끝점 사이면
-                        // out
-                        // todo. messageA_opacity_out: [1, 0, { start: 0.25, end: 0.3 }],
-                        // todo. messageA_translateY_out: [0, -20, { start: 0.25, end: 0.3 }],
                         objs.messageA.style.opacity = calcValues(values.messageA_opacity_out, currentYOffset); // A 컨텐츠에 opacity out css 애니메이션 계산-적용 ↔ 현재 섹션 내 스크롤 높이
                         objs.messageA.style.transform = `translate3d(0, ${calcValues(values.messageA_translateY_out, currentYOffset)}%, 0)`; // A 컨텐츠에 translateY out css 애니메이션 계산-적용 ↔ 현재 섹션 내 스크롤 높이
                     }
@@ -356,18 +350,14 @@
                     let sequence2 = Math.round(calcValues(values.imgSequence, currentYOffset)); // 현재 스크롤 위치에 따라 이미지 순서 적용 // 소수 -> 정수 반올림
                     objs.context.drawImage(objs.videoImages[sequence2], 0, 0); // canvas 이미지 (이미지 배열 안에 들어 있는 이미지로) 그림
                     
-                    //? 캔버스 opacity
+                    // opacity, translateY
                     if(scrollRatio <= 0.5){ // 현재 섹션 내 스크롤 범위 비율이 컨텐츠 시작점과 끝점 사이면
                         // in
-                        // todo. canvas_opacity_in: [0, 1, { start: 0, end: 0.1 }],
                         objs.canvas.style.opacity = calcValues(values.canvas_opacity_in, currentYOffset); // canvas에 opacity in css 애니메이션 계산-적용 ↔ 현재 섹션 내 스크롤 높이
                     }else{
                         // out
-                        // todo. canvas_opacity_out: [1, 0, { start: 0.95, end: 1 }], // canvas opacity out
                         objs.canvas.style.opacity = calcValues(values.canvas_opacity_out, currentYOffset); // canvas에 opacity out css 애니메이션 계산-적용 ↔ 현재 섹션 내 스크롤 높이
                     }
-
-                    //? p opacity, transform
                     if (scrollRatio <= 0.32) {
                         // in
                         objs.messageA.style.opacity = calcValues(values.messageA_opacity_in, currentYOffset);
@@ -377,9 +367,6 @@
                         objs.messageA.style.opacity = calcValues(values.messageA_opacity_out, currentYOffset);
                         objs.messageA.style.transform = `translate3d(0, ${calcValues(values.messageA_translateY_out, currentYOffset)}%, 0)`;
                     }
-
-                    //? span opacity, transform
-                    // todo. pinB_scaleY: [0.5, 1, { start: 0.6, end: 0.65 }],
                     if (scrollRatio <= 0.67) {
                         // in
                         objs.messageB.style.transform = `translate3d(0, ${calcValues(values.messageB_translateY_in, currentYOffset)}%, 0)`;
@@ -391,7 +378,6 @@
                         objs.messageB.style.opacity = calcValues(values.messageB_opacity_out, currentYOffset);
                         objs.pinB.style.transform = `scaleY(${calcValues(values.pinB_scaleY, currentYOffset)})`;
                     }
-                    // todo. pinC_scaleY: [0.5, 1, { start: 0.87, end: 0.92 }]
                     if (scrollRatio <= 0.93) {
                         // in
                         objs.messageC.style.transform = `translate3d(0, ${calcValues(values.messageC_translateY_in, currentYOffset)}%, 0)`;
@@ -480,8 +466,6 @@
                     const recalculatedInnerWidth = window.innerWidth / canvasScaleRatio; // 캔버스 너비 = 윈도우(스크롤 너비 제외) 창 너비 / 캔버스 확대 비율 // 💖
                     const recalculatedInnerHeight = window.innerHeight / canvasScaleRatio; // 캔버스 높이 = 윈도우 창 높이 / 캔버스 확대 비율
 
-                    // todo rect1X: [0, 0, { start: 0, end: 0 }], // 왼쪽 흰 박스
-                    // todo rect2X: [0, 0, { start: 0, end: 0 }], // 오른쪽 흰 박스
                     //? 맨 처음 흰박스 y 위치 (맨 처음만 실행됨)
                     if (!values.rectStartY) { // rectStartY가 값이 없으면 (0이면)
                         // values.rectStartY = objs.canvas.getBoundingClientRect().top; // 흰박스 시작 y 위치 = 캔버스 top 위치
@@ -524,7 +508,7 @@
                         step = 2;
                         
                         //? image[1] 블렌드
-                        // todo. blendHeight: [0, 0, { start: 0, end: 0 }],
+                        // blendHeight: [0, 0, { start: 0, end: 0 }],
                         values.blendHeight[0] = 0; // 블렌드 초기값
                         values.blendHeight[1] = objs.canvas.height; // 블렌드 끝 값 // 캔버스 높이
                         values.blendHeight[2].start = values.rect1X[2].end; // 이미지2 블렌드 시작 timing = 흰박스(이미지1) 끝 timing
@@ -544,7 +528,7 @@
                         //* 블렌드 끝
 
                         //? images[1] 블렌드 후 scale
-                        // todo. canvas_scale: [0, 0, { start: 0, end: 0 }],
+                        //canvas_scale: [0, 0, { start: 0, end: 0 }],
                         if(scrollRatio > values.blendHeight[2].end){ // 블렌드가 끝나면 // 현재 섹션 내 스크롤 크기가 블렌드 끝 timing보다 크면
                             values.canvas_scale[0] =  canvasScaleRatio; // 초기값 = 이전에 계산된 캔버스 scale
                             values.canvas_scale[1] = document.body.offsetWidth / (1.5 * objs.canvas.width); // 최종값(계산될 scale) = window(스크롤 너비 제외) 창 너비 / (1.5 * 캔버스 너비)
@@ -559,18 +543,18 @@
 
                         //? scale 후 p:nth-of-type(2) opasity, translateY
                         // 스케일이 끝나면 // 현재 섹션 내 스크롤 크기가 scale 끝 timing보다 크고
-                        // scale 끝 timong이 0보다 크면(끝 timing이 0일 때(아직 scale 동작 X) 동작 방지))
+                        //scale 끝 timong이 0보다 크면(끝 timing이 0일 때(아직 scale 동작 X) 동작 방지))
                         if((scrollRatio > values.canvas_scale[2].end) && (values.canvas_scale[2].end > 0)){
                             objs.canvas.classList.remove('sticky-canvas'); // 캔버스에 'sticky-canvas' class 삭제
                             objs.canvas.style.marginTop = `${scrollHeight * 0.4}px`;  // canvas에 margin-top css 적용 // 스크롤 20% 동안 블렌드됨 + 스크롤 20% 동안 스케일 조정함 = 40% (스크롤 0.4)
                             
                             //? opacity
-                            // todo. canvasCaption_opacity: [0, 1, { start: 0, end: 0}],
+                            //canvasCaption_opacity: [0, 1, { start: 0, end: 0}],
                             values.canvasCaption_opacity[2].start = values.canvas_scale[2].end; // p opcity 시작 timing = 캔버스 scale 끝 timing 
                             values.canvasCaption_opacity[2].end = values.canvasCaption_opacity[2].start + 0.1; // p opacity 끝 timing = p opacticy 시작 타이밍 + 스크롤 0.1(10%)
                             objs.canvasCaption.style.opacity = calcValues(values.canvasCaption_opacity, currentYOffset); // p에 opacity css 적용 // opctity 애니메이션 계산 ↔ 현재 섹션 내 스크롤 높이
                             //? translateY
-                            // todo. canvasCaption_translateY: [20, 0, { start: 0, end: 0}],
+                            //canvasCaption_translateY: [20, 0, { start: 0, end: 0}],
                             values.canvasCaption_translateY[2].start = values.canvas_scale[2].end; // p translateY 시작 timing = 캔버스 scale 끝 timing 
                             values.canvasCaption_translateY[2].end = values.canvasCaption_translateY[2].start + 0.1; // p translateY 끝 timing = p translateY 시작 타이밍 + 스크롤 0.1(10%)
                             objs.canvasCaption.style.transform = `translate3d(0, ${calcValues(values.canvasCaption_translateY, currentYOffset)}%, 0)`; // p에 translateY css 적용 // translateY 애니메이션 계산 ↔ 현재 섹션 내 스크롤 높이
