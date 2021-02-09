@@ -33,7 +33,7 @@
 
                 // 컨텐츠 들어올 때 (나타날 때)
                 // opacity
-                messageA_opacity_in: [0, 1, { start: 0.1, end: 0.2 }], // 시작값, 끝값, 시작위치, 끝위치 // 구간 10~20%
+                messageA_opacity_in: [0, 1, { start: 0.1, end: 0.2 }], // 초기값, 최종값, 시작 timing, 끝 timing // 구간 10~20%
                 messageB_opacity_in: [0, 1, { start: 0.3, end: 0.4 }],
                 messageC_opacity_in: [0, 1, { start: 0.5, end: 0.6 }],
                 messageD_opacity_in: [0, 1, { start: 0.7, end: 0.8 }],
@@ -136,7 +136,8 @@
                 // ⬜
                 rect1X: [0, 0, { start: 0, end: 0 }], // 왼쪽 흰 박스
                 rect2X: [0, 0, { start: 0, end: 0 }], // 오른쪽 흰 박스
-                blendHeight: [0, 0, { start: 0, end: 0 }], // 이미지 블렌드
+                blendHeight: [0, 0, { start: 0, end: 0 }], // images[1] 블렌드 높이
+                canvas_scale: [0, 0, { start: 0, end: 0 }], // images[1] 블렌드 후 scale
                 rectStartY: 0, // 흰박스 시작 y 위치
             }
         }
@@ -392,10 +393,10 @@
                         
                         // 흰박스 위치 및 크기 애니메이션 계산
                         const whiteRectWidth = recalculatedInnerWidth * 0.15; // 양옆 흰박스 너비(크기) = 재너비 비율의 15%
-                        values.rect1X[0] = (objs.canvas.width - recalculatedInnerWidth) / 2; // 왼쪽 흰박스 시작 위치
-                        values.rect1X[1] = values.rect1X[0] - whiteRectWidth; // 왼쪽 흰박스 끝 위치 (밀려날 때)
-                        values.rect2X[0] = values.rect1X[0] + recalculatedInnerWidth - whiteRectWidth; // 오른쪽 흰박스 시작 위치
-                        values.rect2X[1] = values.rect2X[0] + whiteRectWidth; // 오른쪽 흰박스 끝 위치 (밀려날 때)
+                        values.rect1X[0] = (objs.canvas.width - recalculatedInnerWidth) / 2; // 왼쪽 흰박스 시작 timing
+                        values.rect1X[1] = values.rect1X[0] - whiteRectWidth; // 왼쪽 흰박스 최종위치 (밀려날 때)
+                        values.rect2X[0] = values.rect1X[0] + recalculatedInnerWidth - whiteRectWidth; // 오른쪽 흰박스 시작 timing
+                        values.rect2X[1] = values.rect2X[0] + whiteRectWidth; // 오른쪽 흰박스 최종위치 (밀려날 때)
                         
                         // 흰박스 위치 및 크기 세팅(그리기)
                         //objs.context.fillRect(values.rect1X[0], 0, parseInt(whiteRectWidth), objs.canvas.height); // 왼쪽 // x, y, width, height
@@ -444,18 +445,18 @@
                         // values.rectStartY = objs.canvas.getBoundingClientRect().top; // 흰박스 시작 y 위치 = 캔버스 top 위치
                         // 흰박스 시작 y 위치 = 원래 캔버스 top 위치 + ((원래 캔버스 높이 - 재애니메이션 계산 캔버스 높이)/2)
                         values.rectStartY = objs.canvas.offsetTop + (objs.canvas.height - objs.canvas.height * canvasScaleRatio) / 2;
-                        values.rect1X[2].start = (window.innerHeight / 2) / scrollHeight; // 왼쪽 흰박스 (애니메이션) 시작 위치 = (윈도우 창 높이/2) / 현재 섹션 높이
-                        values.rect2X[2].start = (window.innerHeight / 2) / scrollHeight; // 오른쪽 흰박스 (애니메이션) 시작 위치 = (윈도우 창 높이/2) / 현재 섹션 높이
-                        values.rect1X[2].end = values.rectStartY / scrollHeight; // 왼쪽 흰박스 (애니메이션) 끝 위치 = 흰박스 시작 y 위치 / 현재 섹션 높이
-                        values.rect2X[2].end = values.rectStartY / scrollHeight; // 오른쪽 흰박스 (애니메이션) 끝 위치 = 흰박스 시작 y 위치 / 현재 섹션 높이
+                        values.rect1X[2].start = (window.innerHeight / 2) / scrollHeight; // 왼쪽 흰박스 (애니메이션) 시작 timing = (윈도우 창 높이/2) / 현재 섹션 높이
+                        values.rect2X[2].start = (window.innerHeight / 2) / scrollHeight; // 오른쪽 흰박스 (애니메이션) 시작 timing = (윈도우 창 높이/2) / 현재 섹션 높이
+                        values.rect1X[2].end = values.rectStartY / scrollHeight; // 왼쪽 흰박스 (애니메이션) 최종위치 = 흰박스 시작 y 위치 / 현재 섹션 높이
+                        values.rect2X[2].end = values.rectStartY / scrollHeight; // 오른쪽 흰박스 (애니메이션) 최종위치 = 흰박스 시작 y 위치 / 현재 섹션 높이
                     }
                     
                     // 흰박스 위치 및 크기 애니메이션 계산
                     const whiteRectWidth = recalculatedInnerWidth * 0.15; // 양옆 흰박스 너비(크기) = 재너비 비율의 15%
-                    values.rect1X[0] = (objs.canvas.width - recalculatedInnerWidth) / 2; // 왼쪽 흰박스 시작 위치
-                    values.rect1X[1] = values.rect1X[0] - whiteRectWidth; // 왼쪽 흰박스 끝 위치 (밀려날 때)
-                    values.rect2X[0] = values.rect1X[0] + recalculatedInnerWidth - whiteRectWidth; // 오른쪽 흰박스 시작 위치
-                    values.rect2X[1] = values.rect2X[0] + whiteRectWidth; // 오른쪽 흰박스 끝 위치 (밀려날 때)
+                    values.rect1X[0] = (objs.canvas.width - recalculatedInnerWidth) / 2; // 왼쪽 흰박스 시작 timing
+                    values.rect1X[1] = values.rect1X[0] - whiteRectWidth; // 왼쪽 흰박스 최종위치 (밀려날 때)
+                    values.rect2X[0] = values.rect1X[0] + recalculatedInnerWidth - whiteRectWidth; // 오른쪽 흰박스 시작 timing
+                    values.rect2X[1] = values.rect2X[0] + whiteRectWidth; // 오른쪽 흰박스 최종위치 (밀려날 때)
                     
                     // 흰박스 위치 및 크기 세팅(그리기)
                     //objs.context.fillRect(values.rect1X[0], 0, parseInt(whiteRectWidth), objs.canvas.height); // 왼쪽 // x, y, width, height
@@ -473,20 +474,19 @@
                         objs.canvas.height // height
                     );
 
-                    if(scrollRatio < values.rect1X[2].end){ // 캔버스가 브라우저 상단에 닿지 않았다면 // 현재 섹션 내 스크롤 크기가 흰박스 끝위치보다 크면
+                    if(scrollRatio < values.rect1X[2].end){ // 캔버스가 브라우저 상단에 닿지 않았다면 // 현재 섹션 내 스크롤 크기가 흰박스 끝 timing보다 크면
                         step = 1;
-                        // 이미지 블렌드 - image[0]
                         objs.canvas.classList.remove('sticky-canvas'); // 캔버스에 'sticky-canvas' class 삭제
                     }else{ // 그 외면 (캔버스가 브라우저 상단에 닿았으면)
                         step = 2;
                         
-                        // 이미지 블렌드 - image[1]
-                        // blendHeight: [0, 0, { start: 0, end: 0 }], // 이미지 블렌드
-                        values.blendHeight[0] = 0; // 시작 값
-                        values.blendHeight[1] = objs.canvas.height; // 끝 값 // 캔버스 높이
-                        values.blendHeight[2].start = values.rect1X[2].end; // 이미지2 시작 위치 = 흰박스(이미지1) 끝위치
-                        values.blendHeight[2].end = values.blendHeight[2].start + 0.2; // 이미지2 끝 위치 = 이미지2 시작 위치 + 0.2 // 보일 이미지 높이 20%
-                        const blendHeight = calcValues(values.blendHeight, currentYOffset); // 이미지 블렌드 애니메이션 계산 ↔ 현재 섹션 내 스크롤 높이
+                        // image[1] 블렌드
+                        // blendHeight: [0, 0, { start: 0, end: 0 }],
+                        values.blendHeight[0] = 0; // 블렌드 초기값
+                        values.blendHeight[1] = objs.canvas.height; // 블렌드 끝 값 // 캔버스 높이
+                        values.blendHeight[2].start = values.rect1X[2].end; // 이미지2 블렌드 시작 timing = 흰박스(이미지1) 끝 timing
+                        values.blendHeight[2].end = values.blendHeight[2].start + 0.2; // 이미지2 블렌드 최종위치 = 이미지2 시작 timing + 0.2 // 보일 이미지 높이 20%
+                        const blendHeight = calcValues(values.blendHeight, currentYOffset); // 이미지 블렌드 height 애니메이션 계산 ↔ 현재 섹션 내 스크롤 높이
 
                         objs.context.drawImage(objs.images[1], // 이미지 그림
                             // 원래 이미지에서 어느 부분 그릴거냐 // x, y, width, height
@@ -497,6 +497,19 @@
 
                         objs.canvas.classList.add('sticky-canvas'); // 캔버스 fixed // 캔버스에 'sticky-canvas' class 추가 
                         objs.canvas.style.top = `${-(objs.canvas.height - (objs.canvas.height * canvasScaleRatio)) / 2}px` // canvas에 top css 적용 // -{(원래 캔버스 높이 - 재애니메이션 계산 캔버스 높이)/2}px
+
+                        // 블렌드 끝
+
+                        // images[1] 블렌드 후 scale
+                        //canvas_scale: [0, 0, { start: 0, end: 0 }],
+                        if(scrollRatio > values.blendHeight[2].end){ // 블렌드가 끝나면 // 현재 섹션 내 스크롤 크기가 블렌드 끝 timing보다 크면
+                            values.canvas_scale[0] =  canvasScaleRatio; // 초기값 = 이전에 계산된 캔버스 scale
+                            values.canvas_scale[1] = document.body.offsetWidth / (1.5 * objs.canvas.width); // 최종값(계산될 scale) = window(스크롤 너비 제외) 창 너비 / (1.5 * 캔버스 너비)
+                            values.canvas_scale[2].start = values.blendHeight[2].end; // 시작 timing = 블렌드 끝날 때
+                            values.canvas_scale[2].end = values.canvas_scale[2].start + 0.2; // 끝 timing = 시작 timing + 0.2 (20%)
+
+                            objs.canvas.style.transform = `scale(${calcValues(values.canvas_scale, currentYOffset)})`; // canvas에 scale css 적용 // scale 애니메이션 계산 ↔ 현재 섹션 내 스크롤 높이
+                        }
                     }
 
                     break;
