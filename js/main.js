@@ -123,7 +123,7 @@
             scrollHeight: 0,
             objs: { // 섹션, 섹션 안 컨텐츠 객체 // 각 섹션 + 각 섹션 안 컨텐츠 가져오기
                 container: document.querySelector('#scroll-section-3'),
-                canvasCaption: document.querySelector('.canvas-caption'),
+                canvasCaption: document.querySelector('#scroll-section-3 > p:nth-of-type(2)'),
                 canvas: document.querySelector('#scroll-section-3 > canvas'), // canvas
                 context: document.querySelector('#scroll-section-3 > canvas').getContext('2d'), // canvas 내용(이미지)
                 imagesPath: [ // 이미지 경로
@@ -138,6 +138,8 @@
                 rect2X: [0, 0, { start: 0, end: 0 }], // 오른쪽 흰 박스
                 blendHeight: [0, 0, { start: 0, end: 0 }], // images[1] 블렌드 높이
                 canvas_scale: [0, 0, { start: 0, end: 0 }], // images[1] 블렌드 후 scale
+                canvasCaption_opacity: [0, 1, { start: 0, end: 0}], // p:nth-of-type(2) opacity
+                canvasCaption_translateY: [20, 0, { start: 0, end: 0}], // p:nth-of-type(2) translateY
                 rectStartY: 0, // 흰박스 시작 y 위치
             }
         }
@@ -485,7 +487,7 @@
                         values.blendHeight[0] = 0; // 블렌드 초기값
                         values.blendHeight[1] = objs.canvas.height; // 블렌드 끝 값 // 캔버스 높이
                         values.blendHeight[2].start = values.rect1X[2].end; // 이미지2 블렌드 시작 timing = 흰박스(이미지1) 끝 timing
-                        values.blendHeight[2].end = values.blendHeight[2].start + 0.2; // 이미지2 블렌드 최종위치 = 이미지2 시작 timing + 0.2 // 시작 timing + 스크롤 20% 동안 블렌드됨
+                        values.blendHeight[2].end = values.blendHeight[2].start + 0.2; // 이미지2 블렌드 최종위치 = 이미지2 시작 timing + 스크롤 0.2(20%) // 시작 timing + 스크롤 20% 동안 블렌드됨
                         const blendHeight = calcValues(values.blendHeight, currentYOffset); // 이미지 블렌드 height 애니메이션 계산 ↔ 현재 섹션 내 스크롤 높이
 
                         objs.context.drawImage(objs.images[1], // 이미지 그림
@@ -506,7 +508,7 @@
                             values.canvas_scale[0] =  canvasScaleRatio; // 초기값 = 이전에 계산된 캔버스 scale
                             values.canvas_scale[1] = document.body.offsetWidth / (1.5 * objs.canvas.width); // 최종값(계산될 scale) = window(스크롤 너비 제외) 창 너비 / (1.5 * 캔버스 너비)
                             values.canvas_scale[2].start = values.blendHeight[2].end; // 시작 timing = 블렌드 끝날 때
-                            values.canvas_scale[2].end = values.canvas_scale[2].start + 0.2; // 끝 timing = 시작 timing + 0.2 // 시작 timing + 스크롤 20% 동안 스케일 조정함
+                            values.canvas_scale[2].end = values.canvas_scale[2].start + 0.2; // 끝 timing = 시작 timing + 스크롤 0.2(20%) // 시작 timing + 스크롤 20% 동안 스케일 조정함
 
                             objs.canvas.style.transform = `scale(${calcValues(values.canvas_scale, currentYOffset)})`; // canvas에 scale css 적용 // scale 애니메이션 계산 ↔ 현재 섹션 내 스크롤 높이
                             objs.canvas.style.marginTop = 0;  // canvas에 margin-top css 적용 // (아래 코드에서) 위로 올라갈 때 다시 margin-top 없어줌 (안하면 margin-top 때문에 안보여서)
@@ -518,7 +520,17 @@
                         //scale 끝 timong이 0보다 크면(끝 timing이 0일 때(아직 scale 동작 X) 동작 방지))
                         if((scrollRatio > values.canvas_scale[2].end) && (values.canvas_scale[2].end > 0)){
                             objs.canvas.classList.remove('sticky-canvas'); // 캔버스에 'sticky-canvas' class 삭제
-                            objs.canvas.style.marginTop = `${scrollHeight * 0.4}px`;  // canvas에 margin-top css 적용 // 스크롤 20% 동안 블렌드됨 + 스크롤 20% 동안 스케일 조정함 = 40% (0.4)
+                            objs.canvas.style.marginTop = `${scrollHeight * 0.4}px`;  // canvas에 margin-top css 적용 // 스크롤 20% 동안 블렌드됨 + 스크롤 20% 동안 스케일 조정함 = 40% (스크롤 0.4)
+                            
+                            // p:nth-of-type(2)
+                            //canvasCaption_opacity: [0, 1, { start: 0, end: 0}],
+                            values.canvasCaption_opacity[2].start = values.canvas_scale[2].end; // p opcity 시작 timing = 캔버스 scale 끝 timing 
+                            values.canvasCaption_opacity[2].end = values.canvasCaption_opacity[2].start + 0.1; // p opacity 끝 timing = p opacticy 시작 타이밍 + 스크롤 0.1(10%)
+                            objs.canvasCaption.style.opacity = calcValues(values.canvasCaption_opacity, currentYOffset); // p에 opacity css 적용 // opctity 애니메이션 계산 ↔ 현재 섹션 내 스크롤 높이
+                            //canvasCaption_translateY: [20, 0, { start: 0, end: 0}],
+                            values.canvasCaption_translateY[2].start = values.canvas_scale[2].end; // p translateY 시작 timing = 캔버스 scale 끝 timing 
+                            values.canvasCaption_translateY[2].end = values.canvasCaption_translateY[2].start + 0.1; // p translateY 끝 timing = p translateY 시작 타이밍 + 스크롤 0.1(10%)
+                            objs.canvasCaption.style.transform = `translate3d(0, ${calcValues(values.canvasCaption_translateY, currentYOffset)}%, 0)`; // p에 translateY css 적용 // translateY 애니메이션 계산 ↔ 현재 섹션 내 스크롤 높이
                         }
                     }
 
