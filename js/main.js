@@ -123,7 +123,14 @@
             scrollHeight: 0,
             objs: { // 섹션, 섹션 안 컨텐츠 객체 // 각 섹션 + 각 섹션 안 컨텐츠 가져오기
                 container: document.querySelector('#scroll-section-3'),
-                canvasCaption: document.querySelector('.canvas-caption')
+                canvasCaption: document.querySelector('.canvas-caption'),
+                canvas: document.querySelector('#scroll-section-3 > canvas'), // canvas
+                context: document.querySelector('#scroll-section-3 > canvas').getContext('2d'), // canvas 내용(이미지)
+                imagePath: [ // 이미지 경로
+                    '../images/blend-image-1.jpg',
+                    '../images/blend-image-2.jpg'
+                ],
+                images: [] // canvas 이미지 (담아둘) 배열
             },
             values: { // 섹션 안 컨텐츠 값 객체 // 각 섹션 안 컨텐츠 값 설정
     
@@ -147,6 +154,14 @@
             imgElem2 = document.createElement('img'); // 이미지 요소 추가
             imgElem2.src =`../video/002/IMG_${7027+i}.JPG`; // 이미지 주소
             sceneInfo[2].objs.videoImages.push(imgElem2); // canvas 이미지 배열에 이미지 push
+        }
+
+        // #scroll-section-3
+        let imgElem3;
+        for(let i = 0; i < sceneInfo[3].objs.imagePath.length; i++){ // 이미지 갯수만큼 반복
+            imgElem3 = document.createElement('img'); // 이미지 요소 추가
+            imgElem3.src = sceneInfo[3].objs.imagePath[i]; // 이미지 주소
+            sceneInfo[3].objs.images.push(imgElem3); // canvas 이미지 배열에 이미지 push
         }
     }
     setCanvasImages();
@@ -346,7 +361,25 @@
                     break;
                 
                 case 3: // #scroll-section-3
-                        
+                    // 가로-세로 모두 꽉 차게 하기 위해 세팅(계산 필요)
+                    const widthRatio = window.innerWidth / objs.canvas.width; // 너비 비율 = 윈도우 창 너비 / 캔버스 너비
+                    const heightRatio = window.innerHeight / objs.canvas.height; // 높이 비율 = 윈도우 창 높이 / 캔버스 높이
+                    let canvasScaleRatio; // 캔버스 확대 비율
+
+                    if(widthRatio > heightRatio){ // 너비 비율이 높이 비율보다 크면
+                        canvasScaleRatio = widthRatio; // 캔버스 확대 비율 = 너비 비율
+                        console.log('widthRatio로 결정');
+                    }else{ // 그 외면 (높이 비율이 너비 비율보다 크면)
+                        canvasScaleRatio = heightRatio; // 캔버스 확대 비율 = 높이 비율
+                        console.log('heightRatio로 결정');
+                    }
+
+                    objs.canvas.style.transform = `scale(${canvasScaleRatio})`; // canvas에 scale css 적용
+                    objs.context.drawImage(objs.images[0], 0, 0); // 첫 번째 canvas 이미지 그림
+
+                    // let sequence = Math.round(calcValues(values.imgSequence, currentYOffset)); // 현재 스크롤 위치에 따라 이미지 순서 적용 // 소수 -> 정수 반올림
+                    // objs.context.drawImage(objs.videoImages[sequence], 0, 0); // canvas 이미지 (이미지 배열 안에 들어 있는 이미지로) 그림
+                    // objs.canvas.style.opacity = calcValues(values.canvas_opacity, currentYOffset); // canvas에 opacity css 적용
                     break;
             }
         }
