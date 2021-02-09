@@ -382,7 +382,7 @@
                             canvasScaleRatio = widthRatio; // 캔버스 확대 비율 = 너비비율
                         }
 
-                        objs.canvas.style.transform = `scale(${canvasScaleRatio})`; // canvas에 scale css 적용 // 💖
+                        //objs.canvas.style.transform = `scale(${canvasScaleRatio})`; // canvas에 scale css 적용 // 💖
                         objs.context.drawImage(objs.images[0], 0, 0); // 첫 번째 canvas 이미지 그림
                         objs.context.fillStyle = 'white';
 
@@ -431,7 +431,7 @@
                         canvasScaleRatio = widthRatio; // 캔버스 확대 비율 = 너비비율
                     }
 
-                    objs.canvas.style.transform = `scale(${canvasScaleRatio})`; // canvas에 scale css 적용 // 💖
+                    //objs.canvas.style.transform = `scale(${canvasScaleRatio})`; // canvas에 scale css 적용 // 💖
                     objs.context.drawImage(objs.images[0], 0, 0); // 첫 번째 canvas 이미지 그림
                     objs.context.fillStyle = 'white';
 
@@ -485,7 +485,7 @@
                         values.blendHeight[0] = 0; // 블렌드 초기값
                         values.blendHeight[1] = objs.canvas.height; // 블렌드 끝 값 // 캔버스 높이
                         values.blendHeight[2].start = values.rect1X[2].end; // 이미지2 블렌드 시작 timing = 흰박스(이미지1) 끝 timing
-                        values.blendHeight[2].end = values.blendHeight[2].start + 0.2; // 이미지2 블렌드 최종위치 = 이미지2 시작 timing + 0.2 // 보일 이미지 높이 20%
+                        values.blendHeight[2].end = values.blendHeight[2].start + 0.2; // 이미지2 블렌드 최종위치 = 이미지2 시작 timing + 0.2 // 시작 timing + 스크롤 20% 동안 블렌드됨
                         const blendHeight = calcValues(values.blendHeight, currentYOffset); // 이미지 블렌드 height 애니메이션 계산 ↔ 현재 섹션 내 스크롤 높이
 
                         objs.context.drawImage(objs.images[1], // 이미지 그림
@@ -498,7 +498,7 @@
                         objs.canvas.classList.add('sticky-canvas'); // 캔버스 fixed // 캔버스에 'sticky-canvas' class 추가 
                         objs.canvas.style.top = `${-(objs.canvas.height - (objs.canvas.height * canvasScaleRatio)) / 2}px` // canvas에 top css 적용 // -{(원래 캔버스 높이 - 재애니메이션 계산 캔버스 높이)/2}px
 
-                        // 블렌드 끝
+                        // 🟪 블렌드 끝
 
                         // images[1] 블렌드 후 scale
                         //canvas_scale: [0, 0, { start: 0, end: 0 }],
@@ -506,9 +506,19 @@
                             values.canvas_scale[0] =  canvasScaleRatio; // 초기값 = 이전에 계산된 캔버스 scale
                             values.canvas_scale[1] = document.body.offsetWidth / (1.5 * objs.canvas.width); // 최종값(계산될 scale) = window(스크롤 너비 제외) 창 너비 / (1.5 * 캔버스 너비)
                             values.canvas_scale[2].start = values.blendHeight[2].end; // 시작 timing = 블렌드 끝날 때
-                            values.canvas_scale[2].end = values.canvas_scale[2].start + 0.2; // 끝 timing = 시작 timing + 0.2 (20%)
+                            values.canvas_scale[2].end = values.canvas_scale[2].start + 0.2; // 끝 timing = 시작 timing + 0.2 // 시작 timing + 스크롤 20% 동안 스케일 조정함
 
                             objs.canvas.style.transform = `scale(${calcValues(values.canvas_scale, currentYOffset)})`; // canvas에 scale css 적용 // scale 애니메이션 계산 ↔ 현재 섹션 내 스크롤 높이
+                            objs.canvas.style.marginTop = 0;  // canvas에 margin-top css 적용 // (아래 코드에서) 위로 올라갈 때 다시 margin-top 없어줌 (안하면 margin-top 때문에 안보여서)
+                        }
+
+                        // 🟪 스케일 끝
+
+                        // 스케일이 끝나면 // 현재 섹션 내 스크롤 크기가 scale 끝 timing보다 크고
+                        //scale 끝 timong이 0보다 크면(끝 timing이 0일 때(아직 scale 동작 X) 동작 방지))
+                        if((scrollRatio > values.canvas_scale[2].end) && (values.canvas_scale[2].end > 0)){
+                            objs.canvas.classList.remove('sticky-canvas'); // 캔버스에 'sticky-canvas' class 삭제
+                            objs.canvas.style.marginTop = `${scrollHeight * 0.4}px`;  // canvas에 margin-top css 적용 // 스크롤 20% 동안 블렌드됨 + 스크롤 20% 동안 스케일 조정함 = 40% (0.4)
                         }
                     }
 
