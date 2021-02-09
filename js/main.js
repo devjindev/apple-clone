@@ -133,12 +133,13 @@
                 images: [] // canvas 이미지 (담아둘) 배열
             },
             values: { // 섹션 안 컨텐츠 값 객체 // 각 섹션 안 컨텐츠 값 설정
-    
+                rect1X: [0, 0, { start: 0, end: 0 }], // 왼쪽 흰 박스
+                rect2X: [0, 0, { start: 0, end: 0 }], // 오른쪽 흰 박스
             }
         }
     ];
 
-    // canvas 이미지 세팅 // 스크롤 위치에 따라 보이는 이미지 바뀜
+    // 함수 선언🟩 canvas 이미지 세팅 // 스크롤 위치에 따라 보이는 이미지 바뀜
     function setCanvasImages(){
         // #scroll-section-0
         let imgElem;
@@ -267,7 +268,8 @@
             const scrollRatio = currentYOffset / scrollHeight; // 현재 섹션에서 스크롤된 범위의 비율 = 현재 섹션의 처음에서 얼만큼 스크롤 됐냐 / 현재 섹션 스크롤 높이
             
             switch(currentScene){ // 현재 활성화 섹션이
-                case 0: // #scroll-section-0
+                // #scroll-section-0
+                case 0:
                     // canvas
                     let sequence = Math.round(calcValues(values.imgSequence, currentYOffset)); // 현재 스크롤 위치에 따라 이미지 순서 적용 // 소수 -> 정수 반올림
                     objs.context.drawImage(objs.videoImages[sequence], 0, 0); // canvas 이미지 (이미지 배열 안에 들어 있는 이미지로) 그림
@@ -311,9 +313,11 @@
 
                     break;
                 
-                //case 1: // #scroll-section-1 // normal에서는 필요 X
+                // #scroll-section-1
+                //case 1: // normal에서는 필요 X
                 
-                case 2: // #scroll-section-2
+                // #scroll-section-2
+                case 2:
                     //canvas
                     let sequence2 = Math.round(calcValues(values.imgSequence, currentYOffset)); // 현재 스크롤 위치에 따라 이미지 순서 적용 // 소수 -> 정수 반올림
                     objs.context.drawImage(objs.videoImages[sequence2], 0, 0); // canvas 이미지 (이미지 배열 안에 들어 있는 이미지로) 그림
@@ -360,26 +364,36 @@
 
                     break;
                 
-                case 3: // #scroll-section-3
+                // #scroll-section-3
+                case 3:
                     // 가로-세로 모두 꽉 차게 하기 위해 세팅(계산 필요)
-                    const widthRatio = window.innerWidth / objs.canvas.width; // 너비 비율 = 윈도우 창 너비 / 캔버스 너비
-                    const heightRatio = window.innerHeight / objs.canvas.height; // 높이 비율 = 윈도우 창 높이 / 캔버스 높이
+                    const widthRatio = window.innerWidth / objs.canvas.width; // 캔버스 너비 비율 = 윈도우 창 너비 / 캔버스 너비
+                    const heightRatio = window.innerHeight / objs.canvas.height; // 캔버스 높이 비율 = 윈도우 창 높이 / 캔버스 높이
                     let canvasScaleRatio; // 캔버스 확대 비율
 
-                    if(widthRatio > heightRatio){ // 너비 비율이 높이 비율보다 크면
-                        canvasScaleRatio = widthRatio; // 캔버스 확대 비율 = 너비 비율
-                        console.log('widthRatio로 결정');
-                    }else{ // 그 외면 (높이 비율이 너비 비율보다 크면)
+                    if (widthRatio <= heightRatio) { // 높이 비율이 너비 비율보다 크거나 같으면
                         canvasScaleRatio = heightRatio; // 캔버스 확대 비율 = 높이 비율
-                        console.log('heightRatio로 결정');
+                    } else { // 그 외면 (너비 비율이 높이 비율보다 크면)
+                        canvasScaleRatio = widthRatio; // 캔버스 확대 비율 = 너비비율
                     }
 
                     objs.canvas.style.transform = `scale(${canvasScaleRatio})`; // canvas에 scale css 적용
                     objs.context.drawImage(objs.images[0], 0, 0); // 첫 번째 canvas 이미지 그림
 
-                    // let sequence = Math.round(calcValues(values.imgSequence, currentYOffset)); // 현재 스크롤 위치에 따라 이미지 순서 적용 // 소수 -> 정수 반올림
-                    // objs.context.drawImage(objs.videoImages[sequence], 0, 0); // canvas 이미지 (이미지 배열 안에 들어 있는 이미지로) 그림
-                    // objs.canvas.style.opacity = calcValues(values.canvas_opacity, currentYOffset); // canvas에 opacity css 적용
+                    // ⬜
+                    // 캔버스 내 innerWidth와 innerHeight (양옆 흰 박스를 위해 캔버스 크기 재계산)
+                    const recalculatedInnerWidth = window.innerWidth / canvasScaleRatio; // 캔버스 너비 = 윈도우 창 너비 / 캔버스 확대 비율
+                    const recalculatedInnerHeight = window.innerHeight / canvasScaleRatio; // 캔버스 높이 = 윈도우 창 높이 / 캔버스 확대 비율
+                    // 흰 박스 위치 계산
+                    const whiteRectWidth = recalculatedInnerWidth * 0.15; // 양옆 흰 박스 너비 = 재너비 비율의 15%
+                    values.rect1X[0] = (objs.canvas.width - recalculatedInnerWidth) / 2; // 왼쪽 흰 박스 시작점
+				    values.rect1X[1] = values.rect1X[0] - whiteRectWidth; // 왼쪽 흰 박스 끝점 (밀려날 때)
+				    values.rect2X[0] = values.rect1X[0] + recalculatedInnerWidth - whiteRectWidth; // 오른쪽 흰 박스 시작점
+				    values.rect2X[1] = values.rect2X[0] + whiteRectWidth; // 오른쪽 흰 박스 끝점 (밀려날 때)
+                    // 흰 박스 그리기
+                    objs.context.fillRect(values.rect1X[0], 0, parseInt(whiteRectWidth), objs.canvas.height); // 왼쪽 // x, y, width, height
+                    objs.context.fillRect(values.rect2X[0], 0, parseInt(whiteRectWidth), objs.canvas.height); // 오른쪽 // x, y, width, height
+
                     break;
             }
         }
