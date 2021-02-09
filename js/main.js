@@ -126,15 +126,17 @@
                 canvasCaption: document.querySelector('.canvas-caption'),
                 canvas: document.querySelector('#scroll-section-3 > canvas'), // canvas
                 context: document.querySelector('#scroll-section-3 > canvas').getContext('2d'), // canvas 내용(이미지)
-                imagePath: [ // 이미지 경로
+                imagesPath: [ // 이미지 경로
                     '../images/blend-image-1.jpg',
-                    '../images/blend-image-2.jpg'
+					'../images/blend-image-2.jpg'
                 ],
                 images: [] // canvas 이미지 (담아둘) 배열
             },
             values: { // 섹션 안 컨텐츠 값 객체 // 각 섹션 안 컨텐츠 값 설정
+                // ⬜
                 rect1X: [0, 0, { start: 0, end: 0 }], // 왼쪽 흰 박스
                 rect2X: [0, 0, { start: 0, end: 0 }], // 오른쪽 흰 박스
+                rectStartY: 0, // 흰박스 시작 y 위치
             }
         }
     ];
@@ -159,11 +161,11 @@
 
         // #scroll-section-3
         let imgElem3;
-        for(let i = 0; i < sceneInfo[3].objs.imagePath.length; i++){ // 이미지 갯수만큼 반복
-            imgElem3 = document.createElement('img'); // 이미지 요소 추가
-            imgElem3.src = sceneInfo[3].objs.imagePath[i]; // 이미지 주소
-            sceneInfo[3].objs.images.push(imgElem3); // canvas 이미지 배열에 이미지 push
-        }
+		for (let i = 0; i < sceneInfo[3].objs.imagesPath.length; i++) { // 이미지 갯수만큼 반복
+			imgElem3 = document.createElement('img'); // 이미지 요소 추가
+			imgElem3.src = sceneInfo[3].objs.imagesPath[i]; // 이미지 주소
+			sceneInfo[3].objs.images.push(imgElem3); // canvas 이미지 배열에 이미지 push
+		}
     }
     setCanvasImages();
 
@@ -273,15 +275,15 @@
                     // canvas
                     let sequence = Math.round(calcValues(values.imgSequence, currentYOffset)); // 현재 스크롤 위치에 따라 이미지 순서 적용 // 소수 -> 정수 반올림
                     objs.context.drawImage(objs.videoImages[sequence], 0, 0); // canvas 이미지 (이미지 배열 안에 들어 있는 이미지로) 그림
-                    objs.canvas.style.opacity = calcValues(values.canvas_opacity, currentYOffset); // canvas에 opacity css 적용
+                    objs.canvas.style.opacity = calcValues(values.canvas_opacity, currentYOffset); // canvas에 opacity css 적용 ↔ 현재 섹션 내 스크롤 높이
                     
                     // opacity, translateY
                     if(scrollRatio <= 0.22){ // 현재 섹션 내 스크롤 범위 비율이 컨텐츠 시작점 사이면
-                        objs.messageA.style.opacity = calcValues(values.messageA_opacity_in, currentYOffset); // A 컨텐츠에 opacity in css 적용
-                        objs.messageA.style.transform = `translate3d(0, ${calcValues(values.messageA_translateY_in, currentYOffset)}%, 0)`; // A 컨텐츠에 translateY in css 적용
+                        objs.messageA.style.opacity = calcValues(values.messageA_opacity_in, currentYOffset); // A 컨텐츠에 opacity in css 적용 ↔ 현재 섹션 내 스크롤 높이
+                        objs.messageA.style.transform = `translate3d(0, ${calcValues(values.messageA_translateY_in, currentYOffset)}%, 0)`; // A 컨텐츠에 translateY in css 적용 ↔ 현재 섹션 내 스크롤 높이
                     }else{ // 현재 섹션 내 스크롤 범위 비율이 컨텐츠 끝점 사이면
-                        objs.messageA.style.opacity = calcValues(values.messageA_opacity_out, currentYOffset); // A 컨텐츠에 opacity out css 적용
-                        objs.messageA.style.transform = `translate3d(0, ${calcValues(values.messageA_translateY_out, currentYOffset)}%, 0)`; // A 컨텐츠에 translateY out css 적용
+                        objs.messageA.style.opacity = calcValues(values.messageA_opacity_out, currentYOffset); // A 컨텐츠에 opacity out css 적용 ↔ 현재 섹션 내 스크롤 높이
+                        objs.messageA.style.transform = `translate3d(0, ${calcValues(values.messageA_translateY_out, currentYOffset)}%, 0)`; // A 컨텐츠에 translateY out css 적용 ↔ 현재 섹션 내 스크롤 높이
                     }
                     if (scrollRatio <= 0.42) {
                         // in
@@ -325,10 +327,10 @@
                     // opacity, translateY
                     if(scrollRatio <= 0.5){ // 현재 섹션 내 스크롤 범위 비율이 컨텐츠 시작점과 끝점 사이면
                         // in
-                        objs.canvas.style.opacity = calcValues(values.canvas_opacity_in, currentYOffset); // canvas에 opacity in css 적용
+                        objs.canvas.style.opacity = calcValues(values.canvas_opacity_in, currentYOffset); // canvas에 opacity in css 적용 ↔ 현재 섹션 내 스크롤 높이
                     }else{
                         // out
-                        objs.canvas.style.opacity = calcValues(values.canvas_opacity_out, currentYOffset); // canvas에 opacity out css 적용
+                        objs.canvas.style.opacity = calcValues(values.canvas_opacity_out, currentYOffset); // canvas에 opacity out css 적용 ↔ 현재 섹션 내 스크롤 높이
                     }
                     if (scrollRatio <= 0.32) {
                         // in
@@ -377,23 +379,53 @@
                         canvasScaleRatio = widthRatio; // 캔버스 확대 비율 = 너비비율
                     }
 
-                    objs.canvas.style.transform = `scale(${canvasScaleRatio})`; // canvas에 scale css 적용
+                    objs.canvas.style.transform = `scale(${canvasScaleRatio})`; // canvas에 scale css 적용 // 💖
                     objs.context.drawImage(objs.images[0], 0, 0); // 첫 번째 canvas 이미지 그림
+                    objs.context.fillStyle = 'white';
 
                     // ⬜
                     // 캔버스 내 innerWidth와 innerHeight (양옆 흰 박스를 위해 캔버스 크기 재계산)
-                    const recalculatedInnerWidth = window.innerWidth / canvasScaleRatio; // 캔버스 너비 = 윈도우 창 너비 / 캔버스 확대 비율
+                    const recalculatedInnerWidth = document.body.offsetWidth / canvasScaleRatio; // 캔버스 너비 = 윈도우(스크롤 너비 제외) 창 너비 / 캔버스 확대 비율 // 💖
                     const recalculatedInnerHeight = window.innerHeight / canvasScaleRatio; // 캔버스 높이 = 윈도우 창 높이 / 캔버스 확대 비율
-                    // 흰 박스 위치 계산
-                    const whiteRectWidth = recalculatedInnerWidth * 0.15; // 양옆 흰 박스 너비 = 재너비 비율의 15%
-                    values.rect1X[0] = (objs.canvas.width - recalculatedInnerWidth) / 2; // 왼쪽 흰 박스 시작점
-				    values.rect1X[1] = values.rect1X[0] - whiteRectWidth; // 왼쪽 흰 박스 끝점 (밀려날 때)
-				    values.rect2X[0] = values.rect1X[0] + recalculatedInnerWidth - whiteRectWidth; // 오른쪽 흰 박스 시작점
-				    values.rect2X[1] = values.rect2X[0] + whiteRectWidth; // 오른쪽 흰 박스 끝점 (밀려날 때)
-                    // 흰 박스 그리기
-                    objs.context.fillRect(values.rect1X[0], 0, parseInt(whiteRectWidth), objs.canvas.height); // 왼쪽 // x, y, width, height
-                    objs.context.fillRect(values.rect2X[0], 0, parseInt(whiteRectWidth), objs.canvas.height); // 오른쪽 // x, y, width, height
 
+                    // 맨 처음 흰박스 y 위치 (맨 처음만 실행됨)
+                    if(!values.rectStartY){ // rectStartY가 값이 없으면 (0이면)
+                        //values.rectStartY = objs.canvas.getBoundingClientRect().top; // 흰박스 시작 y 위치 = 캔버스 top 위치
+                        // 흰박스 시작 y 위치 = 원래 캔버스 top 위치 + ((원래 캔버스 높이 - 재계산 캔버스 높이)/2)
+                        values.rectStartY = objs.canvas.offsetTop + ((objs.canvas.height - (objs.canvas.height * canvasScaleRatio)) / 2);
+                        values.rect1X[2].start = (window.innerHeight/2) / scrollHeight; // 왼쪽 흰박스 (애니메이션) 시작 위치 = (윈도우 창 높이/2) / 현재 섹션 높이
+                        values.rect2X[2].start = (window.innerHeight/2) / scrollHeight; // 오른쪽 흰박스 (애니메이션) 시작 위치 = (윈도우 창 높이/2) / 현재 섹션 높이
+                        values.rect1X[2].end = values.rectStartY / scrollHeight; // 왼쪽 흰박스 (애니메이션) 끝 위치 = 흰박스 시작 y 위치 / 현재 섹션 높이
+                        values.rect2X[2].end = values.rectStartY / scrollHeight; // 오른쪽 흰박스 (애니메이션) 끝 위치 = 흰박스 시작 y 위치 / 현재 섹션 높이
+                    }
+                    // rect1X: [0, 0, { start: 0, end: 0 }], // 왼쪽 흰 박스
+                    // rect2X: [0, 0, { start: 0, end: 0 }], // 오른쪽 흰 박스
+                    // rectStartY: 0, // 흰박스 시작 y 위치
+                    // 흰박스 위치 및 크기 계산
+                    const whiteRectWidth = recalculatedInnerWidth * 0.15; // 양옆 흰박스 너비(크기) = 재너비 비율의 15%
+                    values.rect1X[0] = (objs.canvas.width - recalculatedInnerWidth) / 2; // 왼쪽 흰박스 시작 위치
+				    values.rect1X[1] = values.rect1X[0] - whiteRectWidth; // 왼쪽 흰박스 끝 위치 (밀려날 때)
+				    values.rect2X[0] = values.rect1X[0] + recalculatedInnerWidth - whiteRectWidth; // 오른쪽 흰박스 시작 위치
+				    values.rect2X[1] = values.rect2X[0] + whiteRectWidth; // 오른쪽 흰박스 끝 위치 (밀려날 때)
+                    
+                    // 흰박스 위치 및 크기 세팅(그리기)
+                    //objs.context.fillRect(values.rect1X[0], 0, parseInt(whiteRectWidth), objs.canvas.height); // 왼쪽 // x, y, width, height
+                    //objs.context.fillRect(values.rect2X[0], 0, parseInt(whiteRectWidth), objs.canvas.height); // 오른쪽 // x, y, width, height
+                    objs.context.fillRect( // 왼쪽 흰박스
+                        parseInt(calcValues(values.rect1X, currentYOffset)), // x // 왼쪽 흰박스 ↔ 현재 섹션 내 스크롤 높이
+                        0, // y
+                        parseInt(whiteRectWidth), // width
+                        objs.canvas.height // height
+                    );
+                    objs.context.fillRect( // 오른쪽 흰박스
+                        parseInt(calcValues(values.rect2X, currentYOffset)), // x // 오른쪽 흰박스 ↔ 현재 섹션 내 스크롤 높이
+                        0, // y
+                        parseInt(whiteRectWidth), // width
+                        objs.canvas.height // height
+                    );
+
+                    //objs.messageA.style.opacity = calcValues(values.messageA_opacity_in, currentYOffset); // A 컨텐츠에 opacity in css 적용
+                    //objs.messageA.style.transform = `translate3d(0, ${calcValues(values.messageA_translateY_in, currentYOffset)}%, 0)`; // A 컨텐츠에 translateY in css 적용
                     break;
             }
         }
