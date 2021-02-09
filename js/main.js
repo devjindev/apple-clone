@@ -364,6 +364,55 @@
                         objs.pinC.style.transform = `scaleY(${calcValues(values.pinC_scaleY, currentYOffset)})`;
                     }
 
+                    // 🟥 #scroll-section-3 미리 그려줌 (걍 가만히 올라오는 상태(애니메이션 X))
+                    if(scrollRatio > 0.9){ // #scroll-section-2 끝날 때쯤
+                        const objs = sceneInfo[3].objs; // objs 객체 다시 선언
+                        const values = sceneInfo[3].values; // valus 객체 다시 선언
+
+                        // 가로-세로 모두 꽉 차게 하기 위해 세팅(계산 필요)
+                        const widthRatio = window.innerWidth / objs.canvas.width; // 캔버스 너비 비율 = 윈도우 창 너비 / 캔버스 너비
+                        const heightRatio = window.innerHeight / objs.canvas.height; // 캔버스 높이 비율 = 윈도우 창 높이 / 캔버스 높이
+                        let canvasScaleRatio; // 캔버스 확대 비율
+
+                        if (widthRatio <= heightRatio) { // 높이 비율이 너비 비율보다 크거나 같으면
+                            canvasScaleRatio = heightRatio; // 캔버스 확대 비율 = 높이 비율
+                        } else { // 그 외면 (너비 비율이 높이 비율보다 크면)
+                            canvasScaleRatio = widthRatio; // 캔버스 확대 비율 = 너비비율
+                        }
+
+                        objs.canvas.style.transform = `scale(${canvasScaleRatio})`; // canvas에 scale css 적용 // 💖
+                        objs.context.drawImage(objs.images[0], 0, 0); // 첫 번째 canvas 이미지 그림
+                        objs.context.fillStyle = 'white';
+
+                        // ⬜
+                        // 캔버스 내 innerWidth와 innerHeight (양옆 흰 박스를 위해 캔버스 크기 재계산)
+                        const recalculatedInnerWidth = document.body.offsetWidth / canvasScaleRatio; // 캔버스 너비 = 윈도우(스크롤 너비 제외) 창 너비 / 캔버스 확대 비율 // 💖
+                        const recalculatedInnerHeight = window.innerHeight / canvasScaleRatio; // 캔버스 높이 = 윈도우 창 높이 / 캔버스 확대 비율
+                        
+                        // 흰박스 위치 및 크기 계산
+                        const whiteRectWidth = recalculatedInnerWidth * 0.15; // 양옆 흰박스 너비(크기) = 재너비 비율의 15%
+                        values.rect1X[0] = (objs.canvas.width - recalculatedInnerWidth) / 2; // 왼쪽 흰박스 시작 위치
+                        values.rect1X[1] = values.rect1X[0] - whiteRectWidth; // 왼쪽 흰박스 끝 위치 (밀려날 때)
+                        values.rect2X[0] = values.rect1X[0] + recalculatedInnerWidth - whiteRectWidth; // 오른쪽 흰박스 시작 위치
+                        values.rect2X[1] = values.rect2X[0] + whiteRectWidth; // 오른쪽 흰박스 끝 위치 (밀려날 때)
+                        
+                        // 흰박스 위치 및 크기 세팅(그리기)
+                        //objs.context.fillRect(values.rect1X[0], 0, parseInt(whiteRectWidth), objs.canvas.height); // 왼쪽 // x, y, width, height
+                        //objs.context.fillRect(values.rect2X[0], 0, parseInt(whiteRectWidth), objs.canvas.height); // 오른쪽 // x, y, width, height
+                        objs.context.fillRect( // 왼쪽 흰박스
+                            parseInt(values.rect1X[0]), // x // 시작점
+                            0, // y
+                            parseInt(whiteRectWidth), // width
+                            objs.canvas.height // height
+                        );
+                        objs.context.fillRect( // 오른쪽 흰박스
+                            parseInt(values.rect2X[0]), // x // 시작점
+                            0, // y
+                            parseInt(whiteRectWidth), // width
+                            objs.canvas.height // height
+                        );
+                    }
+
                     break;
                 
                 // #scroll-section-3
@@ -398,9 +447,7 @@
                         values.rect1X[2].end = values.rectStartY / scrollHeight; // 왼쪽 흰박스 (애니메이션) 끝 위치 = 흰박스 시작 y 위치 / 현재 섹션 높이
                         values.rect2X[2].end = values.rectStartY / scrollHeight; // 오른쪽 흰박스 (애니메이션) 끝 위치 = 흰박스 시작 y 위치 / 현재 섹션 높이
                     }
-                    // rect1X: [0, 0, { start: 0, end: 0 }], // 왼쪽 흰 박스
-                    // rect2X: [0, 0, { start: 0, end: 0 }], // 오른쪽 흰 박스
-                    // rectStartY: 0, // 흰박스 시작 y 위치
+                    
                     // 흰박스 위치 및 크기 계산
                     const whiteRectWidth = recalculatedInnerWidth * 0.15; // 양옆 흰박스 너비(크기) = 재너비 비율의 15%
                     values.rect1X[0] = (objs.canvas.width - recalculatedInnerWidth) / 2; // 왼쪽 흰박스 시작 위치
@@ -424,8 +471,6 @@
                         objs.canvas.height // height
                     );
 
-                    //objs.messageA.style.opacity = calcValues(values.messageA_opacity_in, currentYOffset); // A 컨텐츠에 opacity in css 적용
-                    //objs.messageA.style.transform = `translate3d(0, ${calcValues(values.messageA_translateY_in, currentYOffset)}%, 0)`; // A 컨텐츠에 translateY in css 적용
                     break;
             }
         }

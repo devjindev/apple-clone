@@ -51,7 +51,7 @@ body > section:not(#scroll-section-3),
   margin: 0 auto;
 }
 body > section {
-  /* border: 2px solid hotpink; */
+  border: 2px solid hotpink;
   position: relative;
   padding-top: 50vh;
 }
