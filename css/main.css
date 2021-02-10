@@ -29,6 +29,8 @@ body {
   /* letter-spacing: -0.1em; */
   background-color: white;
   font-family: "Noto Sans KR", sans-serif;
+  /* mobile 가로 스크롤 방지 */
+  overflow-x: hidden;
 }
 body * {
   font-weight: var(--weight-reaular);
@@ -67,6 +69,7 @@ body .sticky-elem {
 #show-scene-2 #scroll-section-2 .sticky-elem,
 #show-scene-3 #scroll-section-3 .sticky-elem {
   display: block;
+  will-change: transform, opacity;
 }
 body .sticky-elem-canvas {
   top: 0;
@@ -82,6 +85,9 @@ body .sticky-elem-canvas canvas {
 }
 
 /* Loading */
+body.before-loading {
+  overflow: hidden;
+}
 body.before-loading .loading {
   opacity: 1;
 }
@@ -153,6 +159,9 @@ nav:last-of-type.sticky-nav {
   top: 0;
   left: 0;
   background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: saturate(180%) blur(15px);
+  -moz-backdrop-filter: saturate(180%) blur(15px);
+  -o-backdrop-filter: saturate(180%) blur(15px);
   backdrop-filter: saturate(180%) blur(15px);
 }
 nav:first-of-type > div > ul,

@@ -620,37 +620,41 @@
     }
 
     //! 이벤트 리스너
-    //* scroll
-    window.addEventListener('scroll',function(){ // 윈도우 창 스크롤하면,
-        yOffset = window.pageYOffset; // 현재 스크롤 위치
-        scrollLoop(); // 현재 섹션 활성화하기() 실행
-        checkMenu(); // Bottom Navbar sticky() 실행
-
-        //? canvas raf
-        if(!rafState){ //. !false = 참이면
-            rafId = requestAnimationFrame(loop); // 반복 다시 실행
-            rafState = true; // requestAnimationFrame 상태 = true
-        }
-    });
 
     //* load
     window.addEventListener('load', function(){ // 윈도우 창 새로고침 (완료)하면,
         document.body.classList.remove('before-loading'); // body에 'before-loading' class 삭제
         setLayout(); // 각 세션 스크롤 높이 세팅() 실행 // setlayout 변함
         sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0); // 첫 번째 섹션 canvas 이미지 (이미지 배열 안에 들어 있는 이미지로) 그림
-    });
-    document.querySelector('.loading').addEventListener('transitionend', function(e){ // loading transition이 끝나면
-        document.body.removeChild(e.currentTarget); // loading 아예 없애줌
-    });
 
-    //* resize
-    window.addEventListener('resize', function(){ // 각 세션 스크롤 높이 세팅() 실행 // 윈도우 창 리사이즈하면, setlayout 변함
-        if(window.innerWidth > 600){ // 윈도우 창 너비가 600보다 크면 (모바일 아닐 때)
-            setLayout(); // 각 섹션 스크롤 높이() 세팅
-        }
-        sceneInfo[3].values.rectStartY = 0; // 흰박스 시작 y 위치 초기화
+        //* scroll
+        window.addEventListener('scroll',function(){ // 윈도우 창 스크롤하면,
+            yOffset = window.pageYOffset; // 현재 스크롤 위치
+            scrollLoop(); // 현재 섹션 활성화하기() 실행
+            checkMenu(); // Bottom Navbar sticky() 실행
+    
+            //? canvas raf
+            if(!rafState){ //. !false = 참이면
+                rafId = requestAnimationFrame(loop); // 반복 다시 실행
+                rafState = true; // requestAnimationFrame 상태 = true
+            }
+        });
+
+        //* resize
+        window.addEventListener('resize', function(){ // 각 세션 스크롤 높이 세팅() 실행 // 윈도우 창 리사이즈하면, setlayout 변함
+            if(window.innerWidth > 900){ // 윈도우 창 너비가 600보다 크면 (모바일 아닐 때)
+                setLayout(); // 각 섹션 스크롤 높이() 세팅
+                sceneInfo[3].values.rectStartY = 0; // 흰박스 시작 y 위치 초기화
+            }
+        });
+        window.addEventListener('orientationchange', function(){ // 화면 회전 (mobile)
+            setTimeout(setLayout, 500);
+        });
+
+        document.querySelector('.loading').addEventListener('transitionend', function(e){ // loading transition이 끝나면
+            document.body.removeChild(e.currentTarget); // loading 아예 없애줌
+        });
     });
-    window.addEventListener('orientationchange', setLayout);
 
     setCanvasImages(); // canvas 이미지 세팅() 실행
 })();
