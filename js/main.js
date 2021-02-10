@@ -571,9 +571,17 @@
             // 현재 섹션 스크롤 위치(높이) = 현재 섹션 스크롤 위치 + 이전 섹션 스크롤 높이
             prevScrollHeight += sceneInfo[i].scrollHeight;
         }
+        if(delayedYOffset < prevScrollHeight + sceneInfo[currentScene].scrollHeight){ // 현재 스크롤 위치가 (이전 섹션들의 스크롤 높이 합 + 현재 섹션 스크롤 높이)보다 작으면
+            document.body.classList.remove('scroll-effect-end'); // body에 'scroll-effect-end' class 삭제
+        }
         if(delayedYOffset > prevScrollHeight + sceneInfo[currentScene].scrollHeight){ // 현재 스크롤 위치가 (이전 섹션들의 스크롤 높이 합 + 현재 섹션 스크롤 높이)보다 크면
             enterNewScene = true;
-            currentScene++; // 현재 활성화된 섹션 다음으로 넘어감
+            if(currentScene === sceneInfo.length - 1){ // 현재 섹션이 3(4-1)이면 (마지막 섹션) 
+                document.body.classList.add('scroll-effect-end'); // body에 'scroll-effect-end' class 추가
+            }
+            if(currentScene < sceneInfo.length - 1){ // 현재 섹션이 3(4-1)보다 작으면 // 섹션 4,5 적용 X 
+                currentScene++; // 현재 활성화된 섹션 다음으로 넘어감
+            }
             document.body.setAttribute('id', `show-scene-${currentScene}`); // body에 id(현재 활성화된 씬 연결) 추가
         }
         if(delayedYOffset < prevScrollHeight) { // 현재 스크롤 위치가 이전 섹션들의 스크롤 높이 합보다 작으면
@@ -623,9 +631,26 @@
 
     //* load
     window.addEventListener('load', function(){ // 윈도우 창 새로고침 (완료)하면,
+        //setLayout(); // 중간에 새로고침 시, 콘텐츠 양에 따라 높이 계산에 오차가 발생하는 경우를 방지하기 위해 before-load 클래스 제거 전에도 확실하게 높이를 세팅하도록 한번 더 실행
         document.body.classList.remove('before-loading'); // body에 'before-loading' class 삭제
         setLayout(); // 각 세션 스크롤 높이 세팅() 실행 // setlayout 변함
         sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0); // 첫 번째 섹션 canvas 이미지 (이미지 배열 안에 들어 있는 이미지로) 그림
+
+        //? 스크롤 자동 증가
+        let tempYOffset = yOffset; // 반복할 현재 스크롤 크기
+        let tempScrollCount = 0; // 스크롤 반복 횟수
+        
+        if(yOffset > 0){ // 현재 스크롤 크기가 0보다 크면 // 스크롤 아예 안 했으면 동작 X
+            let siId = setInterval(function(){ // 0.02초마다 반복
+                window.scrollTo(0, tempYOffset); // 스크롤 증가
+                tempYOffset += 5; // 5px씩
+    
+                if(tempScrollCount > 20){ // 반복 횟수 20보다 크면
+                    clearInterval(siId); // 반복 종료
+                }
+                tempScrollCount++; // 반복 횟수 1씩 증가
+            }, 20);
+        }
 
         //* scroll
         window.addEventListener('scroll',function(){ // 윈도우 창 스크롤하면,
@@ -643,12 +668,16 @@
         //* resize
         window.addEventListener('resize', function(){ // 각 세션 스크롤 높이 세팅() 실행 // 윈도우 창 리사이즈하면, setlayout 변함
             if(window.innerWidth > 900){ // 윈도우 창 너비가 600보다 크면 (모바일 아닐 때)
-                setLayout(); // 각 섹션 스크롤 높이() 세팅
-                sceneInfo[3].values.rectStartY = 0; // 흰박스 시작 y 위치 초기화
+                window.location.reload(); // relode
+                //setLayout(); // 각 섹션 스크롤 높이() 세팅
+                //sceneInfo[3].values.rectStartY = 0; // 흰박스 시작 y 위치 초기화
             }
         });
         window.addEventListener('orientationchange', function(){ // 화면 회전 (mobile)
-            setTimeout(setLayout, 500);
+            scrollTo(0, 0);
+            setTimeout(function(){
+                window.location.reload(); // relode
+            }, 500);
         });
 
         document.querySelector('.loading').addEventListener('transitionend', function(e){ // loading transition이 끝나면

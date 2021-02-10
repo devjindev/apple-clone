@@ -47,12 +47,13 @@ a {
 
 /* Typotgraphy */
 body > nav > div,
-body > section:not(#scroll-section-3),
+body
+  > section:not(#scroll-section-3):not(#scroll-section-4):not(#scroll-section-5),
 #scroll-section-3 > p {
   max-width: 1000px;
   margin: 0 auto;
 }
-body > section {
+body > section:not(#scroll-section-4):not(#scroll-section-5) {
   /* border: 2px solid hotpink; */
   position: relative;
   padding-top: 50vh;
@@ -70,6 +71,9 @@ body .sticky-elem {
 #show-scene-3 #scroll-section-3 .sticky-elem {
   display: block;
   will-change: transform, opacity;
+}
+.scroll-effect-end .sticky-elem {
+  display: none !important;
 }
 body .sticky-elem-canvas {
   top: 0;
@@ -91,6 +95,9 @@ body.before-loading {
 body.before-loading .loading {
   opacity: 1;
 }
+/* body.before-loading *:not(.loading):not(.loading *) {
+  display: none !important;
+} */
 .loading {
   display: flex;
   align-items: center;
@@ -297,6 +304,14 @@ nav:last-of-type > div > ul li a {
   z-index: 1;
 }
 
+/* #scroll-section-4 */
+/* #scroll-section-5 */
+#scroll-section-4,
+#scroll-section-5 {
+  max-width: 1000px;
+  margin: 0 auto 10rem;
+}
+
 /* Footer */
 footer {
   display: flex;
@@ -320,12 +335,15 @@ footer {
   }
 
   /* Typotgraphy */
-  body > section:not(#scroll-section-3),
+  body
+    > section:not(#scroll-section-3):not(#scroll-section-4):not(#scroll-section-5),
   #scroll-section-3 > p:nth-of-type(1) {
     padding: 50vh 3% 0;
   }
   body > nav > div,
-  #scroll-section-3 > p:nth-of-type(2) {
+  #scroll-section-3 > p:nth-of-type(2),
+  #scroll-section-4,
+  #scroll-section-5 {
     padding: 0 3%;
   }
 
