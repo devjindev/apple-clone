@@ -567,7 +567,7 @@
     function scrollLoop(){
         enterNewScene = false; // 새로운 섹션에 들어간 순간 true
         prevScrollHeight = 0; // 0으로 초기화 (누적되지 않게)
-        for(let i = 0; i < currentScene; i++){
+        for(let i = 0; i < currentScene; i++) {
             // 현재 섹션 스크롤 위치(높이) = 현재 섹션 스크롤 위치 + 이전 섹션 스크롤 높이
             prevScrollHeight += sceneInfo[i].scrollHeight;
         }
@@ -576,15 +576,15 @@
             currentScene++; // 현재 활성화된 섹션 다음으로 넘어감
             document.body.setAttribute('id', `show-scene-${currentScene}`); // body에 id(현재 활성화된 씬 연결) 추가
         }
-        if(yOffset < prevScrollHeight){ // 현재 스크롤 위치가 이전 섹션들의 스크롤 높이 합보다 작으면
+        if(delayedYOffset < prevScrollHeight) { // 현재 스크롤 위치가 이전 섹션들의 스크롤 높이 합보다 작으면
             enterNewScene = true;
-            if(currentScene == 0){ // 현재 활성화 섹션 0이면
+            if(currentScene === 0){ // 현재 활성화 섹션 0이면
                 return; // 걍 리턴함 (에러 방지)
             }
             currentScene--; // 현재 활성화된 섹션 이전으로 넘어감
             document.body.setAttribute('id', `show-scene-${currentScene}`); // body에 id(현재 활성화된 씬 연결) 추가
         }
-        if(enterNewScene == true){ // 새로운 섹션에 들어간 순간이면
+        if(enterNewScene){ // 새로운 섹션에 들어간 순간이면
             return; // 함수 잠깐 종료 (섹션에 들어간 순간에 잠깐 오류떠서 작성하는거임)
         }
 
@@ -637,11 +637,16 @@
     window.addEventListener('load', function(){ // 윈도우 창 새로고침하면,
         setLayout(); // 각 세션 스크롤 높이 세팅() 실행 // setlayout 변함
         sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0); // 첫 번째 섹션 canvas 이미지 (이미지 배열 안에 들어 있는 이미지로) 그림
-
     });
 
     //* resize
-    window.addEventListener('resize',setLayout); // 각 세션 스크롤 높이 세팅() 실행 // 윈도우 창 리사이즈하면, setlayout 변함
-    
+    window.addEventListener('resize', function(){ // 각 세션 스크롤 높이 세팅() 실행 // 윈도우 창 리사이즈하면, setlayout 변함
+        if(window.innerWidth > 600){ // 윈도우 창 너비가 600보다 크면 (모바일 아닐 때)
+            setLayout(); // 각 섹션 스크롤 높이() 세팅
+        }
+        sceneInfo[3].values.rectStartY = 0; // 흰박스 시작 y 위치 초기화
+    });
+    window.addEventListener('orientationchange', setLayout);
+
     setCanvasImages(); // canvas 이미지 세팅() 실행
 })();
