@@ -384,49 +384,36 @@ footer > span a i:hover {
     /* Font size */
     --font-large: 17vw;
     --font-medium: 11vw;
-    --font-regular: 8vw;
+    --font-regular: 7vw;
     --font-small: 14px;
     --font-micro: 12px;
   }
 
   /* Typotgraphy */
-  body
-    > section:not(#scroll-section-3):not(#scroll-section-4):not(#scroll-section-5),
-  #scroll-section-3 > p:nth-of-type(1) {
-    padding: 50vh 3% 0;
-  }
   body > nav > div,
-  #scroll-section-3 > p:nth-of-type(2),
-  #scroll-section-4,
-  #scroll-section-5 {
+  #scroll-section-1,
+  #scroll-section-3 > *:not(canvas) {
     padding: 0 3%;
-  }
-
-  /* Nav */
-  nav:last-of-type > h1 a img {
-    width: 27px;
-  }
-
-  /* #scroll-section-1 */
-  #scroll-section-1 > p strong {
+    margin: 0 auto;
   }
 
   /* #scroll-section-2 */
-  #scroll-section-2 > p:not(:nth-of-type(1)) {
-    width: 50%;
-  }
   #scroll-section-2 > p:nth-of-type(2) {
-    top: 10%;
-    left: 40%;
+    width: 50%;
+    top: 13%;
+    left: 47%;
   }
   #scroll-section-2 > p:nth-of-type(3) {
+    width: 30%;
     top: 15%;
-    left: 45%;
+    left: 57%;
   }
-
-  /* #scroll-section-3 */
-  #scroll-section-3 > p:nth-of-type(1) small {
-    font-size: 16px;
+  #scroll-section-2 > p:not(:nth-of-type(1)) span {
+    display: block;
+    width: 1px;
+    height: 80px;
+    margin-top: 10px;
+    background-color: var(--color-black);
   }
 
   /* Footer */
