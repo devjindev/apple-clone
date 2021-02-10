@@ -81,6 +81,56 @@ body .sticky-elem-canvas canvas {
   z-index: 1;
 }
 
+/* Loading */
+body.before-loading .loading {
+  opacity: 1;
+}
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: white;
+  transition: all 0.5s;
+  opacity: 0;
+  z-index: 1000;
+}
+/* loading svg */
+@keyframes loading-spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.loading svg {
+  width: 54px;
+  line-height: 54px;
+  animation: loading-spin 3s infinite;
+}
+/* loading circle */
+@keyframes loading-circle-ani {
+  0% {
+    stroke-dashoffset: 157;
+  }
+  75% {
+    stroke-dashoffset: -147;
+  }
+  100% {
+    stroke-dashoffset: -157;
+  }
+}
+.loading svg circle {
+  stroke: var(--color-black);
+  stroke-width: 4;
+  stroke-dasharray: 157;
+  stroke-dashoffset: 0;
+  fill: transparent;
+  animation: loading-circle-ani 1s infinite;
+}
+
 /* Navbar */
 nav {
   position: absolute;

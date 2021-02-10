@@ -634,9 +634,13 @@
     });
 
     //* load
-    window.addEventListener('load', function(){ // 윈도우 창 새로고침하면,
+    window.addEventListener('load', function(){ // 윈도우 창 새로고침 (완료)하면,
+        document.body.classList.remove('before-loading'); // body에 'before-loading' class 삭제
         setLayout(); // 각 세션 스크롤 높이 세팅() 실행 // setlayout 변함
         sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0); // 첫 번째 섹션 canvas 이미지 (이미지 배열 안에 들어 있는 이미지로) 그림
+    });
+    document.querySelector('.loading').addEventListener('transitionend', function(e){ // loading transition이 끝나면
+        document.body.removeChild(e.currentTarget); // loading 아예 없애줌
     });
 
     //* resize
