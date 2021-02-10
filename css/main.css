@@ -230,10 +230,12 @@ nav:last-of-type > div > ul li a {
 #scroll-section-3 > canvas.sticky-canvas {
   position: fixed;
   top: 0;
+  z-index: 10;
 }
 #scroll-section-3 > p:nth-of-type(2) {
   color: var(--color-gray);
   line-height: 1.5em;
+  z-index: 1;
 }
 
 /* Footer */
