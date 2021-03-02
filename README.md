@@ -8,12 +8,6 @@
 ## ✨ Preview
 ![preview](https://user-images.githubusercontent.com/74370531/109702308-65bcf700-7bd7-11eb-812b-bdd949b3e52f.gif)  
 
-## 📖 Contents
-* Plofile 
-* Skills
-* Projects
-* Contact  
-
 ## 👤 Author
 **Yujin Hong**
 * Email : hongyujin0216@gmail.com
@@ -23,3 +17,4 @@
 ## 📝 License
 [MIT](https://github.com/devjindev/portfolio/blob/master/LICENSE) © Yujin Hong
 
+###### 인프런 - '애플 웹사이트 인터렉션 클론!'을 참고하여 제작하였습니다.
