@@ -15,6 +15,6 @@
 * Blog : [진개발연구소](https://devjindev.tistory.com/)  
 
 ## 📝 License
-[MIT](https://github.com/devjindev/portfolio/blob/master/LICENSE) © Yujin Hong
+[MIT](https://github.com/devjindev/portfolio/blob/master/LICENSE) © Yujin Hong  
 
-###### 인프런 - '애플 웹사이트 인터렉션 클론!'을 참고하여 제작하였습니다.
+##### 인프런 - '애플 웹사이트 인터렉션 클론!'을 참고하여 제작하였습니다.
