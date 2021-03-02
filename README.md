@@ -15,7 +15,7 @@
 * Blog : [진개발연구소](https://devjindev.tistory.com/)  
 
 ## 📝 License
-[MIT](https://github.com/devjindev/portfolio/blob/master/LICENSE) © Yujin Hong  
+[MIT](https://github.com/devjindev/apple-interactive-site/blob/master/License) © Yujin Hong  
 
 .  
 
