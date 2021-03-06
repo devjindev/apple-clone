@@ -11,7 +11,7 @@
 ## 🔎 Description of function in file
 * sceneInfo : 섹션 선언 (배열)
 * checkMenu() : Navbar
-* setCanvasImages() : canvas 이미지 세팅 (스크롤 위치에 따라 보이는 이미지 바뀐다.)
+* setCanvasImages() : canvas 이미지 세팅 (스크롤 위치에 따라 보이는 이미지 바뀜)
 ```js
 for(let i = 0; i < sceneInfo[0].values.videoImageCount; i++){ // 이미지 갯수만큼 반복
   imgElem = document.createElement('img'); // 이미지 요소 추가
