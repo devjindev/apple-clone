@@ -1,7 +1,7 @@
 'use strict';
 
 // 전역 변수 사용 피하기 위해 전체 틀 함수 생성 // 함수 바로 호출
-(function(){
+(() => {
     //! 변수 선언> collection
     //* scrollLoop()
     let yOffset = 0; // yOffset // window.pageYOffset 대입
@@ -183,7 +183,7 @@
             sceneInfo[0].objs.videoImages.push(imgElem); // canvas 이미지 배열에 이미지 push
         }
 
-        //* #scroll-section-1
+        //* #scroll-section-2
         let imgElem2;
         for(let i = 0; i < sceneInfo[2].values.videoImageCount; i++){ // 이미지 갯수만큼 반복
             imgElem2 = document.createElement('img'); // 이미지 요소 추가
@@ -571,11 +571,22 @@
             // 현재 섹션 스크롤 위치(높이) = 현재 섹션 스크롤 위치 + 이전 섹션 스크롤 높이
             prevScrollHeight += sceneInfo[i].scrollHeight;
         }
-        if(delayedYOffset > prevScrollHeight + sceneInfo[currentScene].scrollHeight){ // 현재 스크롤 위치가 (이전 섹션들의 스크롤 높이 합 + 현재 섹션 스크롤 높이)보다 크면
-            enterNewScene = true;
-            currentScene++; // 현재 활성화된 섹션 다음으로 넘어감
-            document.body.setAttribute('id', `show-scene-${currentScene}`); // body에 id(현재 활성화된 씬 연결) 추가
-        }
+        
+        if (delayedYOffset < prevScrollHeight + sceneInfo[currentScene].scrollHeight) {
+			document.body.classList.remove('scroll-effect-end');
+		}
+
+		if (delayedYOffset > prevScrollHeight + sceneInfo[currentScene].scrollHeight) {
+			enterNewScene = true;
+			if (currentScene === sceneInfo.length - 1) {
+				document.body.classList.add('scroll-effect-end');
+			}
+			if (currentScene < sceneInfo.length - 1) {
+				currentScene++;
+			}
+			document.body.setAttribute('id', `show-scene-${currentScene}`);
+		}
+
         if(delayedYOffset < prevScrollHeight) { // 현재 스크롤 위치가 이전 섹션들의 스크롤 높이 합보다 작으면
             enterNewScene = true;
             if(currentScene === 0){ // 현재 활성화 섹션 0이면
