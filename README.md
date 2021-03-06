@@ -50,7 +50,7 @@ if(delayedYOffset < prevScrollHeight) { // 현재 스크롤 위치가 이전 섹
   document.body.setAttribute('id', `show-scene-${currentScene}`); // body에 id(현재 활성화된 씬 연결) 추가
 }
 ```
-* loop() : canvas requestAnimationFrame
+* loop() : canvas requestAnimationFrame  
 
 ## 👤 Author
 **Yujin Hong**
